@@ -1,4 +1,4 @@
-#include "../minishell_general.h"
+#include "../philosophers_general.h"
 
 int	ph_isdigit(int c)
 {

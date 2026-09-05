@@ -11,6 +11,6 @@ void	*ph_calloc(size_t nmemb, size_t size)
 	tab = malloc(nmemb * size);
 	if (tab == 0)
 		return (NULL);
-	ft_bzero(tab, nmemb * size);
+	ph_bzero(tab, nmemb * size);
 	return (tab);
 }

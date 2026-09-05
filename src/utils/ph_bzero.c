@@ -1,6 +1,6 @@
 #include "../philosophers_general.h"
 
-void	ft_bzero(void *s, size_t n)
+void	ph_bzero(void *s, size_t n)
 {
-	ft_memset(s, 0, n);
+	ph_memset(s, 0, n);
 }

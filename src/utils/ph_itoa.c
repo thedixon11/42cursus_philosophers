@@ -27,7 +27,7 @@ char	*ph_itoa(int n)
 	j = 0;
 	nbr = n;
 	size = sizetocalloc(nbr);
-	tab = ft_calloc(size + 1, sizeof(char));
+	tab = ph_calloc(size + 1, sizeof(char));
 	if (!tab)
 		return (NULL);
 	if (nbr < 0)

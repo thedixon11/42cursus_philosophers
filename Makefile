@@ -1,8 +1,7 @@
 NAME = philo
 
-SRC_DIR = src
-OBJ_DIR = obj
-
+UTILS_DIR = utils
+UTILS_OBJ_DIR = utils_obj
 
 SRCS = philo.c
 
