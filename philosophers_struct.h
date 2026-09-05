@@ -8,6 +8,9 @@ typedef struct s_data
 	long	time_to_eat;
 	long	time_to_sleep;
 	int		nb_of_meal;
+  int   
 }
+
+
 
 #endif
