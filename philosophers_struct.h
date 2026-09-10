@@ -3,20 +3,21 @@
 
 typedef enum e_fork
 {
-	FORK,
-	NO_FORK
+	FREE,
+	USED
 }
 
 typedef	enum e_state
 {
-	S_EAT,
-	S_SLEEP,
-	S_THINK,
-	S_DEAD
+	EAT,
+	SLEEP,
+	THINK,
+	DEAD
 }			t_state;
 
 typedef struct s_philo
 {
+	pthread		id;
 	int			philo_nb;
 	t_state		state;
 	suseconds_t	eat_time;

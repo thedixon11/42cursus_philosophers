@@ -7,25 +7,30 @@ int	create_forks(t_data *data)
 	i = 0;
 	data->forks = ph_calloc(data->amount_philo, sizeof(int));
 	if (!data->forks)
-	{
-		dinner_is_over(data);
 		return (ph_putendl_fd(ERR_MEM, 2), 1);
-	}
 	while (i < data->amount_philo)
 	{
-		data->forks[i] = FORK;
+		data->forks[i] = FREE;
 		i++;
 	}
 	return (0);
 }
 
-int	create_philosophers(t_data *data)
+int	create_philosophers_squad(t_data *data)
 {
+	int	i;
+
+	i = 0;
 	data->philo = ph_calloc(data->amount_philo + 1, sizeof(t_philo));
 	if (!data->philo)
 		return (ph_putendl_fd(ERR_MEM, 2), NULL);
+	while (i < data->amount_philo)
+	{
+		data->philo[i].philo_nb = i;
+		data->philo[i].state = THINK;
+		i++;
 	}
-
+	return (0);
 }
 
 t_data	*init_data(char **argv)
@@ -42,8 +47,9 @@ t_data	*init_data(char **argv)
 	data->nb_of_meal = ph_atol(argv[5]);
 	if (create_forks(data) == 1)
 		return (dinner_is_over(data), NULL);
-	if (create_philosophers(data) == 1)
+	if (create_philosophers_squad(data) == 1)
 		return (dinner_is_over(data), NULL);
+	if (create_)
 	return (data);
 }
 
@@ -72,7 +78,9 @@ int	check_values_are_right(char **argv)
 int	main(int argc, char **argv)
 {
 	t_data	*data;
+	int	i;
 
+	i = 0;
 	if ((argc != 4) || (argc != 5))
 		return (ph_putendl_fd(ERR_ARGS, 2), 1);
 	if (check_values_are_right(argv) == 1)
@@ -80,4 +88,9 @@ int	main(int argc, char **argv)
 	data = init_data(argv);
 	if (!data)
 		return (1);
+	while (i < data->amount_philo)
+	{
+		pthread_create(&data->philo[i].id, NULL, &start_the_meal, data);
+		i++;
+	}
 }
