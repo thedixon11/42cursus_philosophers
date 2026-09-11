@@ -1,5 +1,15 @@
 #include "../philosophers_general.h"
 
+int create_data_mutexes(t_data *data)
+{
+  pthread_mutex_init(&data->mtx_amount_philo, NULL);
+  pthread_mutex_init(&data->mtx_time_to_die, NULL);
+  pthread_mutex_init(&data->mtx_time_to_eat, NULL);
+  pthread_mutex_init(&data->mtx_time_to_sleep, NULL);
+  pthread_mutex_init(&data->mtx_nb_of_meal, NULL);
+  pthread_mutex_init(&data->mtx_printer, NULL);
+}
+
 int	create_forks(t_data *data)
 {
 	int	i;
@@ -49,5 +59,6 @@ t_data	*init_data(char **argv)
 		return (free_memory(data), NULL);
 	if (create_forks(data) == 1)
 		return (dinner_is_over(data), NULL);
+  create_data_mutexes(data);
 	return (data);
 }

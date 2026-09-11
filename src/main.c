@@ -1,22 +1,17 @@
 #include "../philosophers_general.h"
 
-void	define_stoled_fork(t_data *data)
+void	define_lr_fork(t_data *data)
 {
 	int	i;
 
 	i = 0;
 	while (i < data->amount_philo)
 	{
-		if (data->philo[i].philo_nb % 2 == 1)
-		{
-			data->philo[i].my_fork = &data->forks[i];
-			data->philo[i].stoled_fork = &data->forks[i + 1];
-		}
-		else
-		{
-			data->philo[i].my_fork = &data->forks[i];
-			data->philo[i].stoled_fork = &data->forks[i - 1];
-		}
+    data->philo[i].right_fork = &data->forks[i];
+    if (i == 0)
+      data->philo[i].left_fork = &data->forks[data->amount_philo - 1];
+    else
+      data->philo[i].left_fork = &data->forks[i - 1];
 		i++;
 	}
 }
@@ -37,10 +32,10 @@ int	main(int argc, char **argv)
 	define_stoled_fork(data);
 	while (i < data->amount_philo)
 	{
-		pthread_create(&data->philo[i].id, NULL, &start_the_meal, data);
+		pthread_create(&data->philo[i].id, NULL, &sejour_at_chalet, data);
 		i++;
 	}
-	pthread_create(&data->capibara, NULL, &capi_the_watcher, data);
+	pthread_create(&data->capibara, NULL, &capi_the_butler, data);
 	dinner_is_over(data);
 	return (0);
 }

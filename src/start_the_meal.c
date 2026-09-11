@@ -1,11 +1,21 @@
 #include "../philosophers_general.h"
 
-void	*capi_the_watcher(t_data *data)
+void	*capi_the_butler(t_data *data)
 {
 
 }
 
-void	*start_the_meal(t_data *data)
+void  fondue_time(t_data *data)
+{
+
+}
+
+void  sleepin_time(t_data *data)
+{
+
+}
+
+void	*sejour_at_chalet(t_data *data)
 {
 
 }
