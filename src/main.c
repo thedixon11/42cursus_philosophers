@@ -5,16 +5,20 @@ void	define_stoled_fork(t_data *data)
 	int	i;
 
 	i = 0;
-	while ((i + 1) < data->amount_philo)
+	while (i < data->amount_philo)
 	{
-		data->philo[i].my_fork = &data->forks[i];
-		data->philo[i].stoled_fork = &data->forks[i + 1];
-		i++;
-		data->philo[i].my_fork = &data->forks[i];
-		data->philo[i].stoled_fork = &data->forks[i - 1];
+		if (data->philo[i].philo_nb % 2 == 1)
+		{
+			data->philo[i].my_fork = &data->forks[i];
+			data->philo[i].stoled_fork = &data->forks[i + 1];
+		}
+		else
+		{
+			data->philo[i].my_fork = &data->forks[i];
+			data->philo[i].stoled_fork = &data->forks[i - 1];
+		}
 		i++;
 	}
-	data->philo[i].my_fork = &
 }
 
 int	main(int argc, char **argv)
@@ -36,7 +40,7 @@ int	main(int argc, char **argv)
 		pthread_create(&data->philo[i].id, NULL, &start_the_meal, data);
 		i++;
 	}
-	i = 0;
+	pthread_create(&data->capibara, NULL, &capi_the_watcher, data);
 	dinner_is_over(data);
 	return (0);
 }

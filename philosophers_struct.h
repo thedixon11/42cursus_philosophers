@@ -36,6 +36,7 @@ typedef struct s_data
 	pthread_mutex_t		mtx_nb_of_meal;
 	pthread_mutex_t		*forks;
 	t_philo				*philo;
+	pthread				capibara;
 }			t_data;
 
 #endif
