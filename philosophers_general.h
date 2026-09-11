@@ -9,7 +9,7 @@
 
 //Lists of errors
 # define ERR_NUM "Capi wants only numbers as program args. Nothing else."
-# define ERR_MINMAX "Capi wants only numbers between -2147483648 and 2147483647. Last time you do this."
+# define ERR_MINMAX "Capi wants only numbers between -2147483648 and 2147483647. Last time you do this!!"
 # define ERR_ARGS "Capi wants between 4 and 5 args:\n"
 "\t1) number_of_philosophers\n"
 "\t2) time to die\n"
@@ -17,6 +17,7 @@
 "\t4) time to sleep\n"
 "\t5) (optional) number of times each philosophers must eat\n"
 # define ERR_MEM "Capi failed to allocate memory."
+# define ERR_NBPHILO "Capi wants to invite at least one people for the dinner.\n"
 
 // main functions
 void	dinner_is_over(t_data *data);
