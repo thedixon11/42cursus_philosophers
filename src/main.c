@@ -14,6 +14,7 @@ void	define_stoled_fork(t_data *data)
 		data->philo[i].stoled_fork = &data->forks[i - 1];
 		i++;
 	}
+	data->philo[i].my_fork = &
 }
 
 int	main(int argc, char **argv)
