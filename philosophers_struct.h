@@ -18,8 +18,11 @@ typedef struct s_philo
 	pthread_mutex_t		mtx_eat_time;
 	long				      sleep_time;
 	pthread_mutex_t		mtx_sleep_time;
+  int               meal_ate;
+	pthread_mutex_t		mtx_meal_ate;
 	p_thread_mutex_t	*right_fork;
 	p_thread_mutex_t	*left_fork;
+	p_thread_mutex_t	*mtx_printer;
 }				t_philo;
 
 typedef struct s_data
@@ -29,6 +32,7 @@ typedef struct s_data
 	long				      time_to_eat;
 	long				      time_to_sleep;
 	int					      nb_of_meal;
+  bool              is_someone_dead;
 	pthread_mutex_t		*forks;
 	t_philo				    *philo;
 	pthread				    capibara;
@@ -38,6 +42,7 @@ typedef struct s_data
 	pthread_mutex_t		mtx_time_to_sleep;
 	pthread_mutex_t		mtx_nb_of_meal;
   pthread_mutex_t   mtx_printer;
+  pthread_mutex_t   mtx_is_someone_dead;
 }			t_data;
 
 #endif

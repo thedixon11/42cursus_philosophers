@@ -1,32 +1,59 @@
 NAME = philo
 
-UTILS_DIR = utils
-UTILS_OBJ_DIR = utils_obj
+SRC_DIR = src
+OBJ_DIR = obj
+UTILS_DIR = src/utils
+UTILS_OBJ_DIR = obj/utils_obj
 
-SRCS = philo.c
+SRCS = main.c \
+				check_values_are_right.c \
+				data_initialization.c \
+				dinner_is_over.c \
+				sejour_at_chalet.c \
+				capis_desk.c
+
+UTILS = ph_atol.c \
+				ph_bzero.c \
+				ph_calloc.c \
+				ph_free.c \
+				ph_isdigit.c \
+				ph_itoa.c \
+				ph_memset.c \
+				ph_putendl_fd.c \
+				ph_strjoin.c \
+				ph_strlcat.c \
+				ph_strlcpy.c \
+				ph_strlen.c
 
 SRCS := $(addprefix $(SRC_DIR)/,$(SRCS))
+UTILS_SRCS := $(addprefix $(UTILS_DIR)/,$(UTILS))
+
 OBJS := $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
+OBJS_UTILS := $(patsubst $(UTILS_DIR)/%.c,$(UTILS_OBJ_DIR)/%.o,$(UTILS_SRCS))
 
 CC = cc
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror -g 
-INCLUDE = -Iinclude
+CFLAGS = -Wall -Wextra -Werror -g -pthread
+INCLUDE = -I. -I$(UTILS_DIR)
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(INCLUDE) $(OBJS) -o $(NAME)
+$(NAME): $(OBJS) $(OBJS_UTILS)
+	$(CC) $(CFLAGS) $(INCLUDE) $(OBJS) $(OBJS_UTILS) -o $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+
+$(UTILS_OBJ_DIR)/%.o: $(UTILS_DIR)/%.c
+	@mkdir -p $(UTILS_OBJ_DIR)
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 clean:
 	$(RM) -r $(OBJ_DIR)
 
 fclean: clean
-	$(RM) $(NAME) $(NAME_BONUS)
+	$(RM) $(NAME)
 
 re: fclean all
 

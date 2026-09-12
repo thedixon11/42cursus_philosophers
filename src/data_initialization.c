@@ -43,7 +43,7 @@ int	create_philosophers_squad(t_data *data)
 	return (0);
 }
 
-t_data	*init_data(char **argv)
+t_data	*init_data(int argc, char **argv)
 {
 	t_data	*data;
 
@@ -54,7 +54,10 @@ t_data	*init_data(char **argv)
 	data->time_to_die = ph_atol(argv[2]);
 	data->time_to_eat = ph_atol(argv[3]);
 	data->time_to_sleep = ph_atol(argv[4]);
-	data->nb_of_meal = ph_atol(argv[5]);
+  if (argc == 5)
+	  data->nb_of_meal = ph_atol(argv[5]);
+  else
+    data->nb_of_meal = -1;
 	if (create_philosophers_squad(data) == 1)
 		return (free_memory(data), NULL);
 	if (create_forks(data) == 1)
