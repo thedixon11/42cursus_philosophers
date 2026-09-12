@@ -1,5 +1,6 @@
 #ifndef PHILOSOPHERS_GENERAL_H
 # define PHILOSOPHERS_GENERAL_H
+# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <pthread.h>
@@ -7,6 +8,13 @@
 # include <sys/time.h>
 # include "./philosophers_struct.h"
 # include "./src/utils/philosophers_utils.h"
+
+// Lists of log messages
+# define LOG_FORK "has taken a fork\n"
+# define LOG_EAT "is eating\n"
+# define LOG_SLEEP "is sleeping\n"
+# define LOG_THINK "is thinking\n"
+# define LOG_DEAD "has taken a fork\n"
 
 //Lists of errors
 # define ERR_NUM "Capi wants only numbers as program args. Nothing else."
