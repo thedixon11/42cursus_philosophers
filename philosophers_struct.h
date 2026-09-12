@@ -14,15 +14,22 @@ typedef struct s_philo
 	pthread				id;
 	int					philo_nb;
 	t_state				state;
-	long				eat_time;
-	pthread_mutex_t		mtx_eat_time;
+	long				last_meal_time;
+	pthread_mutex_t		mtx_last_meal_time;
 	long				last_action_time;
 	pthread_mutex_t		mtx_last_action_time;
 	int					meal_ate;
 	pthread_mutex_t		mtx_meal_ate;
-	p_thread_mutex_t	*right_fork;
-	p_thread_mutex_t	*left_fork;
-	p_thread_mutex_t	*mtx_printer;
+	pthread_mutex_t		*right_fork;
+	pthread_mutex_t		*left_fork;
+	pthread_mutex_t		*mtx_printer;
+	int					amount_philo;
+	long				time_to_die;
+	long				time_to_eat;
+	long				time_to_sleep;
+	int					nb_of_meal;
+	bool				*does_sejour_over;
+	p_thread_mutex		*mtx_does_sejour_over;
 }						t_philo;
 
 typedef struct s_data
@@ -32,17 +39,13 @@ typedef struct s_data
 	long				time_to_eat;
 	long				time_to_sleep;
 	int					nb_of_meal;
-	bool				is_someone_dead;
+	bool				does_sejour_over;
 	pthread_mutex_t		*forks;
 	t_philo				*philo;
 	pthread				capibara;
 	pthread_mutex_t		mtx_amount_philo;
-	pthread_mutex_t		mtx_time_to_die;
-	pthread_mutex_t		mtx_time_to_eat;
-	pthread_mutex_t		mtx_time_to_sleep;
-	pthread_mutex_t		mtx_nb_of_meal;
 	pthread_mutex_t		mtx_printer;
-	pthread_mutex_t		mtx_is_someone_dead;
+	pthread_mutex_t		mtx_does_sejour_over;
 }						t_data;
 
 #endif

@@ -7,12 +7,13 @@ void	define_lr_fork_n_printer(t_data *data)
 	i = 0;
 	while (i < data->amount_philo)
 	{
-    data->philo[i].right_fork = &data->forks[i];
-    if (i == 0)
-      data->philo[i].left_fork = &data->forks[data->amount_philo - 1];
-    else
-      data->philo[i].left_fork = &data->forks[i - 1];
-    data->philo[i].mtx_printer = &data->mtx_printer;
+		data->philo[i].right_fork = &data->forks[i];
+		if (i == 0)
+			data->philo[i].left_fork = &data->forks[data->amount_philo - 1];
+		else
+			data->philo[i].left_fork = &data->forks[i - 1];
+		data->philo[i].mtx_printer = &data->mtx_printer;
+		data->philo[i].mtx_does_sejour_over = &data->mtx_does_sejour_over;
 		i++;
 	}
 }
