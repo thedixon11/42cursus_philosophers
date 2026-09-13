@@ -1,4 +1,5 @@
 #include "../philosophers_general.h"
+#include <pthread.h>
 
 void  philos_printer(t_philo *philo, char *message)
 {
@@ -8,7 +9,12 @@ void  philos_printer(t_philo *philo, char *message)
 	pthread_mutex_lock(&philo->mtx_last_meal_time);
 	philo->last_action_time = ask_capi_the_time();
 	if (philo->state == EAT)
+	{
 		philo->last_meal_time = philo->last_action_time;
+		pthread_mutex_lock(&philo->mtx_meal_ate);
+		philo->meal_ate++;
+		pthread_mutex_unlock(&philo->mtx_meal_ate);
+	}
 	time_to_print = philo->last_action_time - philo->start_time;
 	pthread_mutex_unlock(&philo->mtx_last_meal_time);
 	pthread_mutex_unlock(&philo->mtx_last_action_time);

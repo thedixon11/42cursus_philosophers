@@ -27,7 +27,7 @@ int	check_values_are_right(char **argv)
 			return (ph_putendl_fd(ERR_MINMAX, 2), 1);
 		y++;
 	}
-	if (ph_atol(argv[1]) > 1)
+	if (ph_atol(argv[1]) < 1)
 		return (ph_putendl_fd(ERR_NBPHILO, 2), 1);
 	return (0);
 }

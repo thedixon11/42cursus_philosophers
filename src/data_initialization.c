@@ -58,7 +58,7 @@ t_capi	*init_capi_forks_philos(int argc, char **argv)
 	capi->time_to_die = ph_atol(argv[2]);
 	capi->time_to_eat = ph_atol(argv[3]);
 	capi->time_to_sleep = ph_atol(argv[4]);
-	if (argc == 5)
+	if (argc == 6)
 		capi->meals_to_eat = ph_atol(argv[5]);
 	else
 		capi->meals_to_eat = -1;
