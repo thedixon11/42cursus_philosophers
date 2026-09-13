@@ -14,36 +14,53 @@
 # define LOG_EAT "is eating\n"
 # define LOG_SLEEP "is sleeping\n"
 # define LOG_THINK "is thinking\n"
-# define LOG_DEAD "has taken a fork\n"
+# define LOG_DEAD "died\n"
 
 //Lists of errors
 # define ERR_NUM "Capi wants only numbers as program args. Nothing else."
 # define ERR_MINMAX "Capi wants only numbers between -2147483648 and 2147483647. Last time you do this!!"
-# define ERR_ARGS "Capi wants between 4 and 5 args:\n"
-"\t1) number_of_philosophers\n"
-"\t2) time to die\n"
-"\t3) time to eat\n"
-"\t4) time to sleep\n"
-"\t5) (optional) number of times each philosophers must eat\n"
+# define ERR_ARGS \
+	"Capi wants between 4 and 5 args:\n" \
+	"\t1) number_of_philosophers\n" \
+	"\t2) time to die\n" \
+	"\t3) time to eat\n" \
+	"\t4) time to sleep\n" \
+	"\t5) (optional) number of times each philosopher must eat\n" \
 # define ERR_MEM "Capi failed to allocate memory."
-# define ERR_NBPHILO "Capi wants to invite at least one people for the dinner.\n"
+# define ERR_NBPHILO "Capi wants to invite at least one person to dinner.\n"
 
-// main functions
-void	define_lr_fork(t_capi *capi);
+// main.c
+void	set_lr_forks(t_capi *capi);
 
-// check values are right
-int	check_values_are_right(char **argv);
-int	check_all_is_digit(char **argv, int	y);
+// check_values_are_right.c
+int		check_values_are_right(char **argv);
+int		check_all_is_digit(char **argv, int	y);
 
-// capi initialization
-t_capi	*init_capi(int argc, char **argv);
-int   	create_philosophers_squad(t_capi *capi);
-int	    create_forks(t_capi *capi);
-int     create_capi_mutexes(t_capi *capi);
+// data_initialization.c
+t_capi	*init_capi_forks_philos(int argc, char **argv);
+int		create_philosophers_squad(t_capi *capi);
+int		create_forks(t_capi *capi);
+int		create_capi_mutexes(t_capi *capi);
 
-// sejour at chalet
-void	*sejour_at_chalet(t_capi *capi);
-void  snoring_time(t_capi *capi);
-void  fondue_time(t_capi *capi);
+// sejour_at_chalet.c
+void	*sejour_at_chalet(t_philo *philo);
+void	snoring_time(t_philo *philo);
+void	fondue_time(t_philo *philo);
+
+// sejour_at_chalet_utils.c
+void	pick_up_forks(t_philo *philo, pthread_mutex_t *f1, pthread_mutex_t *f2);
+void	action_by_usleep(t_philo *philo, long time_of_action);
+bool	does_sejour_over(t_philo *philo);
+long	ask_capi_the_time(void);
+void	philos_printer(t_philo *philo, char *message);
+
+// capis_desk.c
+void	*capi_the_butler(t_capi *capi);
+bool  does_capi_close_chalet(t_capi *capi);
+bool  check_if_someone_starved(t_capi *capi);
+bool  check_if_someone_is_full(t_capi *capi);
+void	capis_printer(t_capi *capi, char *message);
+
+// dinner_is_over
 
 #endif

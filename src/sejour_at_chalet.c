@@ -1,27 +1,5 @@
 #include "../philosophers_general.h"
 
-void	action_by_usleep(t_philo *philo, long time_of_action)
-{
-	long	current_time;
-	long	end;
-
-	current_time = 0;
-	end = ask_capi_the_time() + time_of_action;
-	while (current_time < end && does_sejour_over(philo) == false)
-	{
-		usleep(500);
-		current_time = ask_capi_the_time();
-	}
-}
-
-void	pick_up_forks(t_philo *philo, pthread_mutex *f1, pthread_mutex *f2)
-{
-    pthread_mutex_lock(f1, NULL);
-    philos_printer(philo, LOG_FORK);
-    pthread_mutex_lock(f2, NULL);
-    philos_printer(philo, LOG_FORK);
-}
-
 void  fondue_time(t_philo *philo)
 {
 	if (philo->philo_nb % 2 == 1)

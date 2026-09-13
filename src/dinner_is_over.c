@@ -12,20 +12,20 @@ void	free_memory(t_capi *capi)
 
 void	destroy_all_mutexes(t_capi *capi)
 {
-  int i;
+	int i;
 
-  i = 0;
-  while (i < capi->amount_philo)
-  {
-    pthread_mutex_destroy(&capi->forks[i]);
-    i++;
-  }
-  pthread_mutex_destroy(&capi->mtx_amount_philo);
-  pthread_mutex_destroy(&capi->mtx_time_to_die);
-  pthread_mutex_destroy(&capi->mtx_time_to_eat);
-  pthread_mutex_destroy(&capi->mtx_time_to_sleep);
-  pthread_mutex_destroy(&capi->mtx_nb_of_meal);
-  pthread_mutex_destroy(&capi->mtx_printer);
+	i = 0;
+	while (i < capi->amount_philo)
+	{
+	pthread_mutex_destroy(&capi->forks[i]);
+	i++;
+	}
+	pthread_mutex_destroy(&capi->mtx_amount_philo);
+	pthread_mutex_destroy(&capi->mtx_time_to_die);
+	pthread_mutex_destroy(&capi->mtx_time_to_eat);
+	pthread_mutex_destroy(&capi->mtx_time_to_sleep);
+	pthread_mutex_destroy(&capi->mtx_nb_of_meal);
+	pthread_mutex_destroy(&capi->mtx_printer);
 }
 
 void	join_all_threads(t_capi *capi)

@@ -2,13 +2,8 @@
 
 int create_capi_mutexes(t_capi *capi)
 {
-	pthread_mutex_init(&capi->mtx_amount_philo, NULL);
-	pthread_mutex_init(&capi->mtx_time_to_die, NULL);
-	pthread_mutex_init(&capi->mtx_time_to_eat, NULL);
-	pthread_mutex_init(&capi->mtx_time_to_sleep, NULL);
-	pthread_mutex_init(&capi->mtx_nb_of_meal, NULL);
-	pthread_mutex_init(&capi->mtx_printer, NULL);
-	pthread_mutex_init(&capi->mtx_does_sejour_over, NULL);
+	pthread_mutex_init(&capi->mtx_printer);
+	pthread_mutex_init(&capi->mtx_does_sejour_over);
 }
 
 int	create_forks(t_capi *capi)
@@ -39,16 +34,20 @@ int	create_philosophers_squad(t_capi *capi)
 	{
 		capi->philo[i].philo_nb = i + 1;
 		capi->philo[i].state = THINK;
-		capi->philo[i].time_to_die = capi->time_to_die;
 		capi->philo[i].time_to_eat = capi->time_to_eat;
 		capi->philo[i].time_to_sleep = capi->time_to_sleep;
-		capi->philo[i].nb_of_meal = capi->nb_of_meal;
+		capi->philo[i].mtx_printer = &capi->mtx_printer;
+		capi->philo[i].does_sejour_over = &capi->does_sejour_over;
+		capi->philo[i].mtx_does_sejour_over = &capi->mtx_does_sejour_over;
+		pthread_mutex_init(&capi->philo[i].mtx_last_meal_time, NULL);
+		pthread_mutex_init(&capi->philo[i].mtx_last_action_time, NULL);
+		pthread_mutex_init(&capi->philo[i].mtx_meal_ate, NULL);
 		i++;
 	}
 	return (0);
 }
 
-t_capi	*init_capi(int argc, char **argv)
+t_capi	*init_capi_forks_philos(int argc, char **argv)
 {
 	t_capi	*capi;
 
@@ -60,14 +59,14 @@ t_capi	*init_capi(int argc, char **argv)
 	capi->time_to_eat = ph_atol(argv[3]);
 	capi->time_to_sleep = ph_atol(argv[4]);
 	if (argc == 5)
-	  capi->nb_of_meal = ph_atol(argv[5]);
+		capi->nb_of_meal = ph_atol(argv[5]);
 	else
-    capi->nb_of_meal = -1;
-	capi->does_sejour_over = false;
+		capi->nb_of_meal = -1;
+	capi->does_sejour_over = false;	
+	create_capi_mutexes(capi);
 	if (create_philosophers_squad(capi) == 1)
 		return (free_memory(capi), NULL);
 	if (create_forks(capi) == 1)
 		return (NULL);
-	create_capi_mutexes(capi);
 	return (capi);
 }
