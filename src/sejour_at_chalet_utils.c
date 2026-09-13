@@ -61,10 +61,16 @@ void	action_by_usleep(t_philo *philo, long time_of_action)
 	}
 }
 
-void	pick_up_forks(t_philo *philo, pthread_mutex *f1, pthread_mutex *f2)
+int	pick_up_forks(t_philo *philo, pthread_mutex *f1, pthread_mutex *f2)
 {
     pthread_mutex_lock(f1, NULL);
     philos_printer(philo, LOG_FORK);
+	if (does_sejour_over(philo) == true)
+	{
+	    pthread_mutex_unlock(f1, NULL);
+		return (1);
+	}
     pthread_mutex_lock(f2, NULL);
     philos_printer(philo, LOG_FORK);
+	return (0);
 }
