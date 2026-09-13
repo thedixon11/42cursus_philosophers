@@ -29,21 +29,21 @@
 # define ERR_NBPHILO "Capi wants to invite at least one people for the dinner.\n"
 
 // main functions
-void	define_lr_fork(t_data *data);
+void	define_lr_fork(t_capi *capi);
 
 // check values are right
 int	check_values_are_right(char **argv);
 int	check_all_is_digit(char **argv, int	y);
 
-// data initialization
-t_data	*init_data(int argc, char **argv);
-int   	create_philosophers_squad(t_data *data);
-int	    create_forks(t_data *data);
-int     create_data_mutexes(t_data *data);
+// capi initialization
+t_capi	*init_capi(int argc, char **argv);
+int   	create_philosophers_squad(t_capi *capi);
+int	    create_forks(t_capi *capi);
+int     create_capi_mutexes(t_capi *capi);
 
 // sejour at chalet
-void	*sejour_at_chalet(t_data *data);
-void  snoring_time(t_data *data);
-void  fondue_time(t_data *data);
+void	*sejour_at_chalet(t_capi *capi);
+void  snoring_time(t_capi *capi);
+void  fondue_time(t_capi *capi);
 
 #endif

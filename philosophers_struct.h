@@ -30,7 +30,7 @@ typedef struct s_philo
 	p_thread_mutex		*mtx_does_sejour_over;
 }						t_philo;
 
-typedef struct s_data
+typedef struct s_capi
 {
 	int					amount_philo;
 	long				time_to_die;
@@ -43,6 +43,6 @@ typedef struct s_data
 	pthread				capibara;
 	pthread_mutex_t		mtx_printer;
 	pthread_mutex_t		mtx_does_sejour_over;
-}						t_data;
+}						t_capi;
 
 #endif

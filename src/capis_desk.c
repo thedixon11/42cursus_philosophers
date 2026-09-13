@@ -43,16 +43,44 @@ void  philos_printer(t_philo *philo, char *message)
   pthread_mutex_unlock(philo->mtx_last_meal_time);
   pthread_mutex_unlock(philo->mtx_last_action_time);
 	pthread_mutex_lock(philo.mtx_printer);
-		printf("%d %d %s", time_to_print, philo.philo_nb, message);
+	printf("%d %d %s", time_to_print, philo.philo_nb, message);
 	pthread_mutex_unlock(philo.mtx_printer);
 }
 
-void	capis_printer(t_data *data, char *message)
+void	capis_printer(t_capi *capi, char *message)
 {
 
 }
 
-void	*capi_the_butler(t_data *data)
+bool  check_if_someone_is_full(t_capi *capi)
 {
 
+}
+bool  check_if_someone_starved(t_capi *capi)
+{
+
+}
+
+bool  does_capi_close_chalet(t_capi *capi)
+{
+  if (check_if_someone_starved(capi) == true)
+    return (true);
+  if (check_if_everyone_is_full(capi) == true)
+    return (true);
+  return (false);
+}
+
+void	*capi_the_butler(t_capi *capi)
+{
+  while (1)
+  {
+    if (does_capi_close_chalet(capi) == true)
+    {
+      capi->does_sejour_over = true;
+      usleep(5000);
+      capis_printer(capi,)
+      dinner_is_over(capi);
+      break ;
+    }
+  }
 }

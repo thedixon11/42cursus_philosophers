@@ -1,47 +1,47 @@
 #include "../philosophers_general.h"
 
-void	free_memory(t_data *data)
+void	free_memory(t_capi *capi)
 {
-	if (data->forks)
-		ph_free((void **)&data->forks);
-	if (data->philo)
-		ph_free((void **)&data->philo);
-	if (data)
-		ph_free((void **)&data);
+	if (capi->forks)
+		ph_free((void **)&capi->forks);
+	if (capi->philo)
+		ph_free((void **)&capi->philo);
+	if (capi)
+		ph_free((void **)&capi);
 }
 
-void	destroy_all_mutexes(t_data *data)
+void	destroy_all_mutexes(t_capi *capi)
 {
   int i;
 
   i = 0;
-  while (i < data->amount_philo)
+  while (i < capi->amount_philo)
   {
-    pthread_mutex_destroy(&data->forks[i]);
+    pthread_mutex_destroy(&capi->forks[i]);
     i++;
   }
-  pthread_mutex_destroy(&data->mtx_amount_philo);
-  pthread_mutex_destroy(&data->mtx_time_to_die);
-  pthread_mutex_destroy(&data->mtx_time_to_eat);
-  pthread_mutex_destroy(&data->mtx_time_to_sleep);
-  pthread_mutex_destroy(&data->mtx_nb_of_meal);
-  pthread_mutex_destroy(&data->mtx_printer);
+  pthread_mutex_destroy(&capi->mtx_amount_philo);
+  pthread_mutex_destroy(&capi->mtx_time_to_die);
+  pthread_mutex_destroy(&capi->mtx_time_to_eat);
+  pthread_mutex_destroy(&capi->mtx_time_to_sleep);
+  pthread_mutex_destroy(&capi->mtx_nb_of_meal);
+  pthread_mutex_destroy(&capi->mtx_printer);
 }
 
-void	join_all_threads(t_data *data)
+void	join_all_threads(t_capi *capi)
 {
 	int	i;
 
 	i = 0;
-	while (i < data->amount_philo)
+	while (i < capi->amount_philo)
 	{
-		pthread_join(&data->philo[i].id, NULL);
+		pthread_join(&capi->philo[i].id, NULL);
 		i++;
 	}
 }
 
-void	dinner_is_over(t_data *data)
+void	dinner_is_over(t_capi *capi)
 {
-	destroy_all_mutexes(data);
-	free_memory(data);
+	destroy_all_mutexes(capi);
+	free_memory(capi);
 }
