@@ -26,19 +26,24 @@ long	ask_capi_the_time(void)
 		return (ph_putendl_fd(strerror(errno), 2), -1);
 	seconds = tv.tv_sec;
 	microseconds = tv.tv_usec;
-	milliseconds = (seconds * 1000) + (milliseconds / 1000);
+	milliseconds = (seconds * 1000) + (microseconds / 1000);
 	return (milliseconds);
 }
 
-void  philos_printer(t_philo philo, char *message)
+void  philos_printer(t_philo *philo, char *message)
 {
+  long  time_to_print;
+
+	pthread_mutex_lock(philo->mtx_last_action_time);
+	pthread_mutex_lock(philo->mtx_last_meal_time);
+	philo->last_action_time = ask_capi_the_time();
+  if (philo->state == EAT)
+		philo->mtx_last_meal_time = philo->last_action_time;
+  time_to_print = philo.last_action_time - philo->start_time;
+  pthread_mutex_unlock(philo->mtx_last_meal_time);
+  pthread_mutex_unlock(philo->mtx_last_action_time);
 	pthread_mutex_lock(philo.mtx_printer);
-	pthread_mutex_lock(philo.mtx_last_action_time);
-	philo.last_action_time = ask_capi_the_time();
-	if (philo->state == EAT)
-		philo.mtx_last_meal_time = philo.last_action_time;
-	printf("%d %d %s", philo.last_action_time, philo.philo_nb, message);
-	pthread_mutex_unlock(philo.mtx_last_action_time);
+		printf("%d %d %s", time_to_print, philo.philo_nb, message);
 	pthread_mutex_unlock(philo.mtx_printer);
 }
 

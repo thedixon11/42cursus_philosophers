@@ -14,6 +14,7 @@ typedef struct s_philo
 	pthread				id;
 	int					philo_nb;
 	t_state				state;
+  long        start_time;
 	long				last_meal_time;
 	pthread_mutex_t		mtx_last_meal_time;
 	long				last_action_time;
@@ -23,11 +24,8 @@ typedef struct s_philo
 	pthread_mutex_t		*right_fork;
 	pthread_mutex_t		*left_fork;
 	pthread_mutex_t		*mtx_printer;
-	int					amount_philo;
-	long				time_to_die;
 	long				time_to_eat;
 	long				time_to_sleep;
-	int					nb_of_meal;
 	bool				*does_sejour_over;
 	p_thread_mutex		*mtx_does_sejour_over;
 }						t_philo;
@@ -38,12 +36,11 @@ typedef struct s_data
 	long				time_to_die;
 	long				time_to_eat;
 	long				time_to_sleep;
-	int					nb_of_meal;
+	int					meals_to_eat;
 	bool				does_sejour_over;
 	pthread_mutex_t		*forks;
 	t_philo				*philo;
 	pthread				capibara;
-	pthread_mutex_t		mtx_amount_philo;
 	pthread_mutex_t		mtx_printer;
 	pthread_mutex_t		mtx_does_sejour_over;
 }						t_data;

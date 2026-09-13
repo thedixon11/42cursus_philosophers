@@ -34,6 +34,7 @@ int	main(int argc, char **argv)
 	define_lr_fork(data);
 	while (i < data->amount_philo)
 	{
+    data->philo[i].start_time = ask_capi_the_time(); 
 		pthread_create(&data->philo[i].id, NULL, &sejour_at_chalet, &data->philo[i]);
 		i++;
 	}

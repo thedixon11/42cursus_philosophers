@@ -17,9 +17,9 @@ void	action_by_usleep(t_philo *philo, long time_of_action)
 void	pick_up_forks(t_philo *philo, pthread_mutex *f1, pthread_mutex *f2)
 {
     pthread_mutex_lock(f1, NULL);
-    philos_printer(philo->philo_nb, LOG_FORK);
+    philos_printer(philo, LOG_FORK);
     pthread_mutex_lock(f2, NULL);
-    philos_printer(philo->philo_nb, LOG_FORK);
+    philos_printer(philo, LOG_FORK);
 }
 
 void  fondue_time(t_philo *philo)
@@ -29,22 +29,30 @@ void  fondue_time(t_philo *philo)
 	else
 		pick_up_forks(philo, philo->left_fork, philo->right_fork);
 	philo->state = EAT;
+  philos_printer(philo, LOG_EAT);
 	action_by_usleep(philo, philo->eat_time);
-	pthread_mutex_lock(philo->right_fork, NULL);
-	pthread_mutex_lock(philo->left_fork, NULL);
+	pthread_mutex_unlock(philo->right_fork);
+	pthread_mutex_unlock(philo->left_fork);
+  philo->state = THINK;
 	philos_printer(philo, LOG_THINK);
 }
 
 void  snoring_time(t_philo *philo)
 {
-	philo-> // NOTE: have to continue here !!
+	philo->state = SLEEP;
+  philos_printer(philo, LOG_SLEEP);
+  action_by_usleep(philo, philo->time_to_sleep);
+  philo->state = THINK;
+  philos_printer(philo, LOG_THINK);
 }
 
 void	*sejour_at_chalet(t_philo *philo)
 {
-  while (1)
+  while (does_sejour_over(philo) == false)
   {
-    fondue_time(philo);
-    snoring_time(philo);
+    if (does_sejour_over(philo == false))
+      fondue_time(philo);
+    if (does_sejour_over(philo == false))
+      snoring_time(philo);
   }
 }

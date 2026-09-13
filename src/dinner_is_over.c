@@ -1,6 +1,5 @@
 #include "../philosophers_general.h"
 
-
 void	free_memory(t_data *data)
 {
 	if (data->forks)
