@@ -10,9 +10,11 @@ SRCS = main.c \
 				data_initialization.c \
 				dinner_is_over.c \
 				sejour_at_chalet.c \
+				sejour_at_chalet_utils.c \
 				capis_desk.c
 
 UTILS = ph_atol.c \
+				ph_atoi.c \
 				ph_bzero.c \
 				ph_calloc.c \
 				ph_free.c \
@@ -36,24 +38,30 @@ RM = rm -f
 CFLAGS = -Wall -Wextra -Werror -g -pthread
 INCLUDE = -I. -I$(UTILS_DIR)
 
-all: $(NAME)
+all: start $(NAME)
 
 $(NAME): $(OBJS) $(OBJS_UTILS)
-	$(CC) $(CFLAGS) $(INCLUDE) $(OBJS) $(OBJS_UTILS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(INCLUDE) $(OBJS) $(OBJS_UTILS) -o $(NAME)
+	@echo "files compiled"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 $(UTILS_OBJ_DIR)/%.o: $(UTILS_DIR)/%.c
 	@mkdir -p $(UTILS_OBJ_DIR)
-	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+
+start:
+	@echo "compiling files ..."
 
 clean:
-	$(RM) -r $(OBJ_DIR)
+	@echo "cleaning situation"
+	@$(RM) -r $(OBJ_DIR)
 
 fclean: clean
-	$(RM) $(NAME)
+	@echo "more cleaning situation"
+	@$(RM) $(NAME)
 
 re: fclean all
 

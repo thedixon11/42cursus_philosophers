@@ -1,4 +1,4 @@
-#include "../philosophers_general.h"
+#include "./philosophers_utils.h"
 
 size_t	ph_strlen(const char *s)
 {

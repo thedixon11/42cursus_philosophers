@@ -1,9 +1,9 @@
 #include "./philosophers_utils.h"
 
-long	ph_atol(const char *nptr)
+int	ph_atoi(const char *nptr)
 {
-	long	nb;
-	int		neg;
+	int	nb;
+	int	neg;
 
 	neg = 0;
 	nb = 0;

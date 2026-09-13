@@ -34,10 +34,10 @@ void	join_all_threads(t_capi *capi)
 	i = 0;
 	while (i < capi->amount_philo)
 	{
-		pthread_join(&capi->philo[i].id, NULL);
+		pthread_join(capi->philo[i].id, NULL);
 		i++;
 	}
-	pthread_join(&capi->capibara, NULL);
+	pthread_join(capi->capibara, NULL);
 }
 
 void	dinner_is_over(t_capi *capi)

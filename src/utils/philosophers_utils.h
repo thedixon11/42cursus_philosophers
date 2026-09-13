@@ -1,9 +1,17 @@
-#ifndef PHILOSOPHERS_GENERAL_H
-# define PHILOSOPHERS_GENERAL_H
+#ifndef PHILOSOPHERS_UTILS_H
+# define PHILOSOPHERS_UTILS_H
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <pthread.h>
+# include <stdbool.h>
+# include <limits.h>
+# include <stdint.h>
+# include <sys/time.h>
 
-//philo utils
 void	*ph_calloc(size_t nmemb, size_t size);
 long	ph_atol(const char *nptr);
+int	ph_atoi(const char *nptr);
 void	ph_putendl_fd(char *s, int fd);
 char	*ph_itoa(int n);
 char	*ph_strjoin(char const *s1, char const *s2);
@@ -14,5 +22,6 @@ size_t	ph_strlen(const char *s);
 void	ph_bzero(void *s, size_t n);
 int	ph_isdigit(int c);
 void	*ph_memset(void *s, int c, size_t n);
+void	ph_putendl_fd(char *s, int fd);
 
 #endif

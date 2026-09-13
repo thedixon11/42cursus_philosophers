@@ -1,4 +1,4 @@
-#include "../philosophers_general.h"
+#include "./philosophers_utils.h"
 
 void	*ph_memset(void *s, int c, size_t n)
 {

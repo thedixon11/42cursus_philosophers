@@ -2,22 +2,22 @@
 
 void	capis_printer(t_capi *capi, char *message)
 {
-  long  curent_time;
+  long  current_time;
 
   pthread_mutex_lock(&capi->mtx_printer);
   current_time = ask_capi_the_time();
-  printf("%d %d %s", current_time, capi->whos_dead, message);
+  printf("%ld %d %s", current_time, capi->whos_dead, message);
   pthread_mutex_unlock(&capi->mtx_printer);
 }
 
-bool  check_if_someone_is_full(t_capi *capi)
+bool  check_if_everyone_is_full(t_capi *capi)
 {
   int i;
 
   i = 0;
   if (capi->meals_to_eat == -1)
     return (false);
-  while (capi->philo[i] != NULL)
+  while (i < capi->amount_philo)
   {
     pthread_mutex_lock(&capi->philo[i].mtx_meal_ate);
     if (capi->philo[i].meal_ate < capi->meals_to_eat)
@@ -35,13 +35,13 @@ bool  check_if_someone_starved(t_capi *capi)
 
   i = 0;
   current_time = 0;
-  while (philo[i] != NULL)
+  while (i < capi->amount_philo)
   {
     current_time = ask_capi_the_time();
-    pthread_mutex_lock(&capi->philo[i].mtx_last_meal_time)
+    pthread_mutex_lock(&capi->philo[i].mtx_last_meal_time);
     if ((current_time - capi->philo[i].last_meal_time) > capi->time_to_die)
     {
-      capi->does_someone_dies = true;
+      capi->does_someone_died = true;
       capi->whos_dead = capi->philo[i].philo_nb;
       return (true);
     }
@@ -60,18 +60,22 @@ bool  does_capi_close_chalet(t_capi *capi)
 	return (false);
 }
 
-void	*capi_the_butler(t_capi *capi)
+void	*capi_the_butler(void *item)
 {
-  while (1)
-  {
-    if (does_capi_close_chalet(capi) == true)
-    {
-      capi->does_sejour_over = true;
-      usleep(5000);
-      if (capi->does_someone_died == true)
-        capis_printer(capi, LOG_DEAD);
-      dinner_is_over(capi);
-      break ;
-    }
-  }
+	t_capi	*capi;
+	
+	capi = (t_capi *)item;
+	while (1)
+	{
+		if (does_capi_close_chalet(capi) == true)
+		{
+			capi->does_sejour_over = true;
+			usleep(5000);
+			if (capi->does_someone_died == true)
+				capis_printer(capi, LOG_DEAD);
+			dinner_is_over(capi);
+			break ;
+		}
+	}
+	return (NULL);
 }

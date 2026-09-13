@@ -5,7 +5,10 @@
 # include <unistd.h>
 # include <pthread.h>
 # include <stdbool.h>
+# include <limits.h>
 # include <sys/time.h>
+# include <errno.h>
+# include <string.h>
 # include "./philosophers_struct.h"
 # include "./src/utils/philosophers_utils.h"
 
@@ -25,7 +28,7 @@
 	"\t2) time to die\n" \
 	"\t3) time to eat\n" \
 	"\t4) time to sleep\n" \
-	"\t5) (optional) number of times each philosopher must eat\n" \
+	"\t5) (optional) number of times each philosopher must eat\n"
 # define ERR_MEM "Capi failed to allocate memory."
 # define ERR_NBPHILO "Capi wants to invite at least one person to dinner.\n"
 
@@ -40,27 +43,31 @@ int		check_all_is_digit(char **argv, int	y);
 t_capi	*init_capi_forks_philos(int argc, char **argv);
 int		create_philosophers_squad(t_capi *capi);
 int		create_forks(t_capi *capi);
-int		create_capi_mutexes(t_capi *capi);
+void	create_capi_mutexes(t_capi *capi);
 
 // sejour_at_chalet.c
-void	*sejour_at_chalet(t_philo *philo);
+void	*sejour_at_chalet(void *item);
 void	snoring_time(t_philo *philo);
 void	fondue_time(t_philo *philo);
 
 // sejour_at_chalet_utils.c
-void	pick_up_forks(t_philo *philo, pthread_mutex_t *f1, pthread_mutex_t *f2);
+int		pick_up_forks(t_philo *philo, pthread_mutex_t *f1, pthread_mutex_t *f2);
 void	action_by_usleep(t_philo *philo, long time_of_action);
 bool	does_sejour_over(t_philo *philo);
 long	ask_capi_the_time(void);
 void	philos_printer(t_philo *philo, char *message);
 
 // capis_desk.c
-void	*capi_the_butler(t_capi *capi);
+void	*capi_the_butler(void *item);
 bool  does_capi_close_chalet(t_capi *capi);
 bool  check_if_someone_starved(t_capi *capi);
-bool  check_if_someone_is_full(t_capi *capi);
+bool  check_if_everyone_is_full(t_capi *capi);
 void	capis_printer(t_capi *capi, char *message);
 
-// dinner_is_over
+// dinner_is_over.c
+void	dinner_is_over(t_capi *capi);
+void	join_all_threads(t_capi *capi);
+void	destroy_all_mutexes(t_capi *capi);
+void	free_memory(t_capi *capi);
 
 #endif

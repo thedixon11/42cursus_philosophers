@@ -22,7 +22,7 @@ int	main(int argc, char **argv)
 	int	i;
 
 	i = 0;
-	if ((argc != 4) || (argc != 5))
+	if (argc != 4 && argc != 5)
 		return (ph_putendl_fd(ERR_ARGS, 2), 1);
 	if (check_values_are_right(argv) == 1)
 		return (1);

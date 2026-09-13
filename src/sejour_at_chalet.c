@@ -20,7 +20,7 @@ void  fondue_time(t_philo *philo)
 	}
 	philo->state = EAT;
 	philos_printer(philo, LOG_EAT);
-	action_by_usleep(philo, philo->eat_time);
+	action_by_usleep(philo, philo->time_to_eat);
 	pthread_mutex_unlock(philo->right_fork);
 	pthread_mutex_unlock(philo->left_fork);
 	philo->state = THINK;
@@ -38,13 +38,17 @@ void  snoring_time(t_philo *philo)
 		philos_printer(philo, LOG_THINK);
 }
 
-void	*sejour_at_chalet(t_philo *philo)
+void	*sejour_at_chalet(void *item)
 {
-  while (does_sejour_over(philo) == false)
-  {
-    if (does_sejour_over(philo == false))
-      fondue_time(philo);
-    if (does_sejour_over(philo == false))
-      snoring_time(philo);
-  }
+	t_philo	*philo;
+	
+	philo = (t_philo *)item;
+	while (does_sejour_over(philo) == false)
+	{
+		if (does_sejour_over(philo) == false)
+			fondue_time(philo);
+		if (does_sejour_over(philo) == false)
+			snoring_time(philo);
+	}
+	return (NULL);
 }

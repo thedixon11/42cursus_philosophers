@@ -1,9 +1,9 @@
 #include "../philosophers_general.h"
 
-int create_capi_mutexes(t_capi *capi)
+void create_capi_mutexes(t_capi *capi)
 {
-	pthread_mutex_init(&capi->mtx_printer);
-	pthread_mutex_init(&capi->mtx_does_sejour_over);
+	pthread_mutex_init(&capi->mtx_printer, NULL);
+	pthread_mutex_init(&capi->mtx_does_sejour_over, NULL);
 }
 
 int	create_forks(t_capi *capi)
@@ -29,7 +29,7 @@ int	create_philosophers_squad(t_capi *capi)
 	i = 0;
 	capi->philo = ph_calloc(capi->amount_philo + 1, sizeof(t_philo));
 	if (!capi->philo)
-		return (ph_putendl_fd(ERR_MEM, 2), NULL);
+		return (ph_putendl_fd(ERR_MEM, 2), 1);
 	while (i < capi->amount_philo)
 	{
 		capi->philo[i].philo_nb = i + 1;
@@ -59,9 +59,9 @@ t_capi	*init_capi_forks_philos(int argc, char **argv)
 	capi->time_to_eat = ph_atol(argv[3]);
 	capi->time_to_sleep = ph_atol(argv[4]);
 	if (argc == 5)
-		capi->nb_of_meal = ph_atol(argv[5]);
+		capi->meals_to_eat = ph_atol(argv[5]);
 	else
-		capi->nb_of_meal = -1;
+		capi->meals_to_eat = -1;
 	capi->does_sejour_over = false;	
 	create_capi_mutexes(capi);
 	if (create_philosophers_squad(capi) == 1)

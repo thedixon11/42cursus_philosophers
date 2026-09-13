@@ -10,7 +10,7 @@ typedef enum e_state
 
 typedef struct s_philo
 {
-	pthread				id;
+	pthread_t				id;
 	int					philo_nb;
 	t_state				state;
 	long				start_time;
@@ -31,7 +31,7 @@ typedef struct s_philo
 
 typedef struct s_capi
 {
-	pthread				capibara;
+	pthread_t			capibara;
 	int					amount_philo;
 	long				time_to_die;
 	long				time_to_eat;

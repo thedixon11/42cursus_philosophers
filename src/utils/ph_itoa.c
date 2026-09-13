@@ -1,4 +1,4 @@
-#include "../philosophers_general.h" 
+#include "./philosophers_utils.h"
 
 static size_t	sizetocalloc(long int n)
 {
