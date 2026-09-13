@@ -37,7 +37,6 @@ void	join_all_threads(t_capi *capi)
 		pthread_join(capi->philo[i].id, NULL);
 		i++;
 	}
-	pthread_join(capi->capibara, NULL);
 }
 
 void	dinner_is_over(t_capi *capi)

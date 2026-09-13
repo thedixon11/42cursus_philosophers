@@ -58,7 +58,7 @@ long	ask_capi_the_time(void);
 void	philos_printer(t_philo *philo, char *message);
 
 // capis_desk.c
-void	*capi_the_butler(void *item);
+void	*capi_the_butler(t_capi *capi);
 bool  does_capi_close_chalet(t_capi *capi);
 bool  check_if_someone_starved(t_capi *capi);
 bool  check_if_everyone_is_full(t_capi *capi);

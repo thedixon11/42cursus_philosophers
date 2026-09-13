@@ -1,10 +1,11 @@
 #include "../philosophers_general.h"
-#include <pthread.h>
 
 void  philos_printer(t_philo *philo, char *message)
 {
 	long  time_to_print;
 
+	if (does_sejour_over(philo) == true)
+		return ;
 	pthread_mutex_lock(&philo->mtx_last_action_time);
 	pthread_mutex_lock(&philo->mtx_last_meal_time);
 	philo->last_action_time = ask_capi_the_time();
@@ -59,11 +60,15 @@ void	action_by_usleep(t_philo *philo, long time_of_action)
 	long	end;
 
 	current_time = 0;
+	if (does_sejour_over(philo) == true)
+		return ;
 	end = ask_capi_the_time() + time_of_action;
-	while (current_time < end && does_sejour_over(philo) == false)
+	while (current_time < end)
 	{
 		usleep(500);
 		current_time = ask_capi_the_time();
+		if (does_sejour_over(philo) == true)
+			break ;
 	}
 }
 
@@ -71,11 +76,6 @@ int	pick_up_forks(t_philo *philo, pthread_mutex_t *f1, pthread_mutex_t *f2)
 {
     pthread_mutex_lock(f1);
     philos_printer(philo, LOG_FORK);
-	if (does_sejour_over(philo) == true)
-	{
-	    pthread_mutex_unlock(f1);
-		return (1);
-	}
     pthread_mutex_lock(f2);
     philos_printer(philo, LOG_FORK);
 	return (0);

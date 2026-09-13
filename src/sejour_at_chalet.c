@@ -2,30 +2,15 @@
 
 void  fondue_time(t_philo *philo)
 {
-	int	error;
-
-	error = 0;
 	if (philo->philo_nb % 2 == 1)
-		error = pick_up_forks(philo, philo->right_fork, philo->left_fork);
+		pick_up_forks(philo, philo->right_fork, philo->left_fork);
 	else
-		error = pick_up_forks(philo, philo->left_fork, philo->right_fork);
-	if (does_sejour_over(philo) == true)
-	{
-		if (error != 1)
-		{
-			pthread_mutex_unlock(philo->right_fork);
-			pthread_mutex_unlock(philo->left_fork);
-		}
-		return ;
-	}
+		pick_up_forks(philo, philo->left_fork, philo->right_fork);
 	philo->state = EAT;
 	philos_printer(philo, LOG_EAT);
 	action_by_usleep(philo, philo->time_to_eat);
 	pthread_mutex_unlock(philo->right_fork);
 	pthread_mutex_unlock(philo->left_fork);
-	philo->state = THINK;
-	if (does_sejour_over(philo) == false)
-		philos_printer(philo, LOG_THINK);
 }
 
 void  snoring_time(t_philo *philo)
@@ -34,8 +19,7 @@ void  snoring_time(t_philo *philo)
 	philos_printer(philo, LOG_SLEEP);
 	action_by_usleep(philo, philo->time_to_sleep);
 	philo->state = THINK;
-	if (does_sejour_over(philo) == false)
-		philos_printer(philo, LOG_THINK);
+	philos_printer(philo, LOG_THINK);
 }
 
 void	*sejour_at_chalet(void *item)

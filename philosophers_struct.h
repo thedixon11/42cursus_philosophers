@@ -31,7 +31,6 @@ typedef struct s_philo
 
 typedef struct s_capi
 {
-	pthread_t			capibara;
 	int					amount_philo;
 	long				time_to_die;
 	long				time_to_eat;

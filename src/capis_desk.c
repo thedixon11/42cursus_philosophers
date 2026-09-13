@@ -13,19 +13,23 @@ void	capis_printer(t_capi *capi, char *message)
 bool  check_if_everyone_is_full(t_capi *capi)
 {
   int i;
+	bool	answer;
 
   i = 0;
+	answer = true;
   if (capi->meals_to_eat == -1)
     return (false);
   while (i < capi->amount_philo)
   {
     pthread_mutex_lock(&capi->philo[i].mtx_meal_ate);
     if (capi->philo[i].meal_ate < capi->meals_to_eat)
-      return (false);
+		answer = false;
     pthread_mutex_unlock(&capi->philo[i].mtx_meal_ate);
+	if (answer == false)
+		break ;
     i++;
   }
-  return (true);
+  return (answer);
 }
 
 bool  check_if_someone_starved(t_capi *capi)
@@ -60,11 +64,8 @@ bool  does_capi_close_chalet(t_capi *capi)
 	return (false);
 }
 
-void	*capi_the_butler(void *item)
+void	*capi_the_butler(t_capi *capi)
 {
-	t_capi	*capi;
-	
-	capi = (t_capi *)item;
 	while (1)
 	{
 		if (does_capi_close_chalet(capi) == true)
