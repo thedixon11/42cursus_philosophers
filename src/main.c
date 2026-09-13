@@ -38,7 +38,7 @@ int	main(int argc, char **argv)
 		pthread_create(&capi->philo[i].id, NULL, &sejour_at_chalet, &capi->philo[i]);
 		i++;
 	}
-	//pthread_create(&capi->capibara, NULL, &capi_the_butler, capi);
+	pthread_create(&capi->capibara, NULL, &capi_the_butler, capi);
 	dinner_is_over(capi);
 	return (0);
 }

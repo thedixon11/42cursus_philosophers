@@ -5,8 +5,7 @@ typedef enum e_state
 {
 	EAT,
 	SLEEP,
-	THINK,
-	DEAD
+	THINK
 }						t_state;
 
 typedef struct s_philo
@@ -19,7 +18,7 @@ typedef struct s_philo
 	pthread_mutex_t		mtx_last_meal_time;
 	long				last_action_time;
 	pthread_mutex_t		mtx_last_action_time;
-	int					meal_ate;
+	int					    meal_ate;
 	pthread_mutex_t		mtx_meal_ate;
 	pthread_mutex_t		*right_fork;
 	pthread_mutex_t		*left_fork;
@@ -38,6 +37,8 @@ typedef struct s_capi
 	long				time_to_sleep;
 	int					meals_to_eat;
 	bool				does_sejour_over;
+  bool        does_someone_died;
+  int         whos_dead;
 	pthread_mutex_t		*forks;
 	t_philo				*philo;
 	pthread				capibara;
