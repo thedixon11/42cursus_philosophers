@@ -33,7 +33,7 @@ int	main(int argc, char **argv)
 	while (i < capi->amount_philo)
 	{
 		capi->philo[i].start_time = ask_capi_the_time();
-		capi->philo[i].last_meal_time = capi->philo[i].start_time + capi->time_to_die;
+		capi->philo[i].last_meal_time = capi->philo[i].start_time;
 		pthread_create(&capi->philo[i].id, NULL, &sejour_at_chalet, &capi->philo[i]);
 		i++;
 	}
