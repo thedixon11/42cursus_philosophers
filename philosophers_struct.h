@@ -14,13 +14,11 @@ typedef struct s_philo
 	int					philo_nb;
 	t_state				state;
 	long				start_time;
-  int         amount_philo;
+	int					amount_philo;
 	long				time_to_eat;
 	long				time_to_sleep;
 	long				last_meal_time;
 	pthread_mutex_t		mtx_last_meal_time;
-	long				last_action_time;
-	pthread_mutex_t		mtx_last_action_time;
 	int					meal_ate;
 	pthread_mutex_t		mtx_meal_ate;
 	bool				*does_sejour_over;
@@ -39,7 +37,7 @@ typedef struct s_capi
 	int					meals_to_eat;
 	bool				does_someone_died;
 	int					whos_dead;
-  long        time_of_death;
+	long				time_of_death;
 	t_philo				*philo;
 	bool				does_sejour_over;
 	pthread_mutex_t		mtx_does_sejour_over;

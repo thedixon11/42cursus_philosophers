@@ -19,7 +19,6 @@ void	destroy_all_mutexes(t_capi *capi)
 	{
 		pthread_mutex_destroy(&capi->forks[i]);
 		pthread_mutex_destroy(&capi->philo[i].mtx_last_meal_time);
-		pthread_mutex_destroy(&capi->philo[i].mtx_last_action_time);
 		pthread_mutex_destroy(&capi->philo[i].mtx_meal_ate);
 		i++;
 	}

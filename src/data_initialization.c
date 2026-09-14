@@ -43,7 +43,6 @@ int	create_philosophers_squad(t_capi *capi)
 		capi->philo[i].does_sejour_over = &capi->does_sejour_over;
 		capi->philo[i].mtx_does_sejour_over = &capi->mtx_does_sejour_over;
 		pthread_mutex_init(&capi->philo[i].mtx_last_meal_time, NULL);
-		pthread_mutex_init(&capi->philo[i].mtx_last_action_time, NULL);
 		pthread_mutex_init(&capi->philo[i].mtx_meal_ate, NULL);
 		i++;
 	}

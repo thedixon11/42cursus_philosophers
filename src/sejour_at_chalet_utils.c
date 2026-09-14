@@ -1,26 +1,25 @@
 #include "../philosophers_general.h"
-#include <bits/pthreadtypes.h>
-#include <pthread.h>
 
 void  philos_printer(t_philo *philo, char *message)
 {
-	long  time_to_print;
+	long	time_to_print;
+	long	last_action_time;
+	long	last_meal_time;
 
 	if (does_sejour_over(philo) == true)
 		return ;
-	pthread_mutex_lock(&philo->mtx_last_action_time);
-	pthread_mutex_lock(&philo->mtx_last_meal_time);
-	philo->last_action_time = ask_capi_the_time();
+	last_action_time = ask_capi_the_time();
 	if (philo->state == EAT)
 	{
-		philo->last_meal_time = philo->last_action_time;
+		last_meal_time = last_action_time;
+		pthread_mutex_lock(&philo->mtx_last_meal_time);
+		philo->last_meal_time = last_meal_time;
+		pthread_mutex_unlock(&philo->mtx_last_meal_time);
 		pthread_mutex_lock(&philo->mtx_meal_ate);
 		philo->meal_ate++;
 		pthread_mutex_unlock(&philo->mtx_meal_ate);
 	}
-	time_to_print = philo->last_action_time - philo->start_time;
-	pthread_mutex_unlock(&philo->mtx_last_meal_time);
-	pthread_mutex_unlock(&philo->mtx_last_action_time);
+	time_to_print = last_action_time - philo->start_time;
 	pthread_mutex_lock(philo->mtx_printer);
 	printf("%ld %d %s", time_to_print, philo->philo_nb, message);
 	pthread_mutex_unlock(philo->mtx_printer);
@@ -50,8 +49,7 @@ bool	does_sejour_over(t_philo *philo)
 
 	answer = false;
 	pthread_mutex_lock(philo->mtx_does_sejour_over);
-	if (*(philo->does_sejour_over) == true)
-		answer = true;
+	answer = *(philo->does_sejour_over);
 	pthread_mutex_unlock(philo->mtx_does_sejour_over);
 	return (answer);
 }
@@ -67,7 +65,7 @@ void	action_by_usleep(t_philo *philo, long time_of_action)
 	end = ask_capi_the_time() + time_of_action;
 	while (current_time < end)
 	{
-		usleep(500);
+		usleep(100);
 		current_time = ask_capi_the_time();
 		if (does_sejour_over(philo) == true)
 			break ;

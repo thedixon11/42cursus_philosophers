@@ -16,47 +16,50 @@ void	capis_printer(t_capi *capi, char *message)
 
 bool  check_if_everyone_is_full(t_capi *capi)
 {
-  int i;
+	int		i;
 	bool	answer;
 
-  i = 0;
+	i = 0;
 	answer = true;
-  if (capi->meals_to_eat == -1)
-    return (false);
-  while (i < capi->amount_philo)
-  {
-    pthread_mutex_lock(&capi->philo[i].mtx_meal_ate);
-    if (capi->philo[i].meal_ate < capi->meals_to_eat)
-		answer = false;
-    pthread_mutex_unlock(&capi->philo[i].mtx_meal_ate);
-	if (answer == false)
-		break ;
-    i++;
-  }
-  return (answer);
+	if (capi->meals_to_eat == -1)
+		return (false);
+	while (i < capi->amount_philo)
+	{
+		pthread_mutex_lock(&capi->philo[i].mtx_meal_ate);
+		if (capi->philo[i].meal_ate < capi->meals_to_eat)
+			answer = false;
+		pthread_mutex_unlock(&capi->philo[i].mtx_meal_ate);
+		if (answer == false)
+			break ;
+		i++;
+	}
+	return (answer);
 }
 
 bool  check_if_someone_starved(t_capi *capi)
 {
-  int i;
-  long current_time;
+	int		i;
+	long	current_time;
+	long	last_meal_time;
 
-  i = 0;
-  current_time = 0;
-  while (i < capi->amount_philo)
-  {
-    current_time = ask_capi_the_time();
-    pthread_mutex_lock(&capi->philo[i].mtx_last_meal_time);
-    if ((current_time - capi->philo[i].last_meal_time) > capi->time_to_die)
-    {
-      capi->does_someone_died = true;
-      capi->whos_dead = capi->philo[i].philo_nb;
-      return (true);
-    }
-    pthread_mutex_unlock(&capi->philo[i].mtx_last_meal_time);
-    i++;
-  }
-  return (false);
+	i = 0;
+	current_time = 0;
+	last_meal_time = 0;
+	while (i < capi->amount_philo)
+	{
+		current_time = ask_capi_the_time();
+		pthread_mutex_lock(&capi->philo[i].mtx_last_meal_time);
+		last_meal_time = capi->philo[i].last_meal_time;
+		pthread_mutex_unlock(&capi->philo[i].mtx_last_meal_time);
+		if ((current_time - last_meal_time) > capi->time_to_die)
+		{
+			capi->does_someone_died = true;
+			capi->whos_dead = capi->philo[i].philo_nb;
+			return (true);
+		}
+		i++;
+	}
+	return (false);
 }
 
 bool  does_capi_close_chalet(t_capi *capi)
@@ -74,7 +77,9 @@ void	*capi_the_butler(t_capi *capi)
 	{
 		if (does_capi_close_chalet(capi) == true)
 		{
+			pthread_mutex_lock(&capi->mtx_does_sejour_over);
 			capi->does_sejour_over = true;
+			pthread_mutex_unlock(&capi->mtx_does_sejour_over);
 			usleep(500);
 			if (capi->does_someone_died == true)
 				capis_printer(capi, LOG_DEAD);
