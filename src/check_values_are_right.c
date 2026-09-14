@@ -1,4 +1,5 @@
 #include "../philosophers_general.h"
+#include "utils/philosophers_utils.h"
 
 int	check_all_is_digit(char **argv, int	y)
 {
@@ -14,7 +15,7 @@ int	check_all_is_digit(char **argv, int	y)
 	return (0);
 }
 
-int	check_values_are_right(char **argv)
+int	check_values_are_right(int argc, char **argv)
 {
 	int	y;
 
@@ -29,5 +30,7 @@ int	check_values_are_right(char **argv)
 	}
 	if (ph_atol(argv[1]) < 1)
 		return (ph_putendl_fd(ERR_NBPHILO, 2), 1);
+  if (argc == 6 && ph_atol(argv[5]) == 0)
+    return (ph_putendl_fd(ERR_FULL, 2), 1);
 	return (0);
 }

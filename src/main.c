@@ -44,7 +44,7 @@ int	main(int argc, char **argv)
 	error = 0;
 	if (argc < 5 || argc > 6)
 		return (ph_putendl_fd(ERR_ARGS, 2), 1);
-	if (check_values_are_right(argv) == 1)
+	if (check_values_are_right(argc, argv) == 1)
 		return (1);
 	capi = init_capi_forks_philos(argc, argv);
 	if (!capi)

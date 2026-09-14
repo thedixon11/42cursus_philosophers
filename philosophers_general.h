@@ -32,12 +32,13 @@
 # define ERR_NBPHILO "Capi wants to invite at least one person to dinner.\n"
 # define ERR_TIME "Capi had an issue with gettimeofday"
 # define ERR_PRINTF "Capi had an issue with printf"
+# define ERR_FULL "Nobody is hungry. Lets do the fondue another day\n"
 
 // main.c
 void	set_lr_forks(t_capi *capi);
 
 // check_values_are_right.c
-int		check_values_are_right(char **argv);
+int		check_values_are_right(int argc, char **argv);
 int		check_all_is_digit(char **argv, int	y);
 
 // data_initialization.c
