@@ -11,7 +11,8 @@ SRCS = main.c \
 				dinner_is_over.c \
 				sejour_at_chalet.c \
 				sejour_at_chalet_utils.c \
-				capis_desk.c
+				capis_desk.c \
+				error_inside_routine.c
 
 UTILS = ph_atol.c \
 				ph_atoi.c \

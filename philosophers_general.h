@@ -7,7 +7,6 @@
 # include <stdbool.h>
 # include <limits.h>
 # include <sys/time.h>
-# include <errno.h>
 # include <string.h>
 # include "./philosophers_struct.h"
 # include "./src/utils/philosophers_utils.h"
@@ -31,6 +30,8 @@
 	"\t5) (optional) number of times each philosopher must eat\n"
 # define ERR_MEM "Capi failed to allocate memory."
 # define ERR_NBPHILO "Capi wants to invite at least one person to dinner.\n"
+# define ERR_TIME "Capi had an issue with gettimeofday"
+# define ERR_PRINTF "Capi had an issue with printf"
 
 // main.c
 void	set_lr_forks(t_capi *capi);
@@ -52,10 +53,10 @@ void	fondue_time(t_philo *philo);
 
 // sejour_at_chalet_utils.c
 int		pick_up_forks(t_philo *philo, pthread_mutex_t *f1, pthread_mutex_t *f2);
-void	action_by_usleep(t_philo *philo, long time_of_action);
+int	action_by_usleep(t_philo *philo, long time_of_action);
 bool	does_sejour_over(t_philo *philo);
 long	ask_capi_the_time(void);
-void	philos_printer(t_philo *philo, char *message);
+int	philos_printer(t_philo *philo, char *message);
 
 // capis_desk.c
 void	*capi_the_butler(t_capi *capi);
@@ -69,5 +70,9 @@ void	dinner_is_over(t_capi *capi);
 void	join_all_threads(t_capi *capi);
 void	destroy_all_mutexes(t_capi *capi);
 void	free_memory(t_capi *capi);
+
+// error_inside_routine.c
+void  error_inside_routine_capi(t_capi *capi, char *message);
+void  error_inside_routine(t_philo *philo, char *message);
 
 #endif

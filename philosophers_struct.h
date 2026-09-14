@@ -31,6 +31,7 @@ typedef struct s_philo
 typedef struct s_capi
 {
 	int					amount_philo;
+  int         created_threads;
 	long				time_to_die;
 	long				time_to_eat;
 	long				time_to_sleep;

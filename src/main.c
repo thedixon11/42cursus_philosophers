@@ -16,12 +16,32 @@ void	set_lr_forks(t_capi *capi)
 	}
 }
 
+int create_threads(t_capi *capi)
+{
+  int i;
+
+  i = 0;
+	while (i < capi->amount_philo)
+	{
+		capi->philo[i].start_time = ask_capi_the_time();
+		capi->philo[i].last_meal_time = capi->philo[i].start_time;
+		if (pthread_create(&capi->philo[i].id, NULL, &sejour_at_chalet,
+                    &capi->philo[i]) != 0)
+    {
+      capi->created_threads = i;
+      return (1);
+    }
+		i++;
+	}
+  return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_capi	*capi;
-	int	i;
+	int	error;
 
-	i = 0;
+	error = 0;
 	if (argc < 5 || argc > 6)
 		return (ph_putendl_fd(ERR_ARGS, 2), 1);
 	if (check_values_are_right(argv) == 1)
@@ -30,14 +50,9 @@ int	main(int argc, char **argv)
 	if (!capi)
 		return (1);
 	set_lr_forks(capi);
-	while (i < capi->amount_philo)
-	{
-		capi->philo[i].start_time = ask_capi_the_time();
-		capi->philo[i].last_meal_time = capi->philo[i].start_time;
-		pthread_create(&capi->philo[i].id, NULL, &sejour_at_chalet, &capi->philo[i]);
-		i++;
-	}
-	capi_the_butler(capi);
+  error = create_threads(capi);
+  if (error == 0)
+	  capi_the_butler(capi);
 	dinner_is_over(capi);
 	return (0);
 }

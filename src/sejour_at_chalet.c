@@ -12,7 +12,8 @@ void  fondue_time(t_philo *philo)
 	if (error == 1)
 		return ;
 	philo->state = EAT;
-	philos_printer(philo, LOG_EAT);
+	if (philos_printer(philo, LOG_EAT) == 2)
+    error_inside_routine(philo, ERR_PRINTF);
 	action_by_usleep(philo, philo->time_to_eat);
 	pthread_mutex_unlock(philo->right_fork);
 	pthread_mutex_unlock(philo->left_fork);
@@ -21,10 +22,12 @@ void  fondue_time(t_philo *philo)
 void  snoring_time(t_philo *philo)
 {
 	philo->state = SLEEP;
-	philos_printer(philo, LOG_SLEEP);
+	if (philos_printer(philo, LOG_SLEEP) == 2)
+    error_inside_routine(philo, ERR_PRINTF);
 	action_by_usleep(philo, philo->time_to_sleep);
 	philo->state = THINK;
-	philos_printer(philo, LOG_THINK);
+	if (philos_printer(philo, LOG_THINK) == 2)
+    error_inside_routine(philo, ERR_PRINTF);
 }
 
 void	*sejour_at_chalet(void *item)

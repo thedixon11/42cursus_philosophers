@@ -31,7 +31,7 @@ void	join_all_threads(t_capi *capi)
 	int	i;
 
 	i = 0;
-	while (i < capi->amount_philo)
+	while (i < capi->created_threads)
 	{
 		pthread_join(capi->philo[i].id, NULL);
 		i++;

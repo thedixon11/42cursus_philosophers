@@ -1,14 +1,16 @@
 #include "../philosophers_general.h"
 
-void  philos_printer(t_philo *philo, char *message)
+int  philos_printer(t_philo *philo, char *message)
 {
 	long	time_to_print;
 	long	last_action_time;
 	long	last_meal_time;
 
 	if (does_sejour_over(philo) == true)
-		return ;
+		return(1);
 	last_action_time = ask_capi_the_time();
+  if (last_action_time == -1)
+    return (error_inside_routine(philo, ERR_TIME), 1);
 	if (philo->state == EAT)
 	{
 		last_meal_time = last_action_time;
@@ -21,8 +23,10 @@ void  philos_printer(t_philo *philo, char *message)
 	}
 	time_to_print = last_action_time - philo->start_time;
 	pthread_mutex_lock(philo->mtx_printer);
-	printf("%ld %d %s", time_to_print, philo->philo_nb, message);
+	if (printf("%ld %d %s", time_to_print, philo->philo_nb, message) < 0)
+    return (pthread_mutex_unlock(philo->mtx_printer), 2);
 	pthread_mutex_unlock(philo->mtx_printer);
+  return (0);
 }
 
 long	ask_capi_the_time(void)
@@ -36,7 +40,7 @@ long	ask_capi_the_time(void)
 	milliseconds = 0;
 	microseconds = 0;
 	if (gettimeofday(&tv, NULL) == -1)
-		return (ph_putendl_fd(strerror(errno), 2), -1);
+		return (-1);
 	seconds = tv.tv_sec;
 	microseconds = tv.tv_usec;
 	milliseconds = (seconds * 1000) + (microseconds / 1000);
@@ -54,28 +58,37 @@ bool	does_sejour_over(t_philo *philo)
 	return (answer);
 }
 
-void	action_by_usleep(t_philo *philo, long time_of_action)
+int	action_by_usleep(t_philo *philo, long time_of_action)
 {
 	long	current_time;
 	long	end;
 
 	current_time = ask_capi_the_time();
+  if (current_time == -1)
+    return (error_inside_routine(philo, ERR_TIME), 1);
 	if (does_sejour_over(philo) == true)
-		return ;
-	end = ask_capi_the_time() + time_of_action;
+		return (1);
+	end = ask_capi_the_time();
+  if (end == -1)
+    return (error_inside_routine(philo, ERR_TIME), 1);
+  end += time_of_action;
 	while (current_time < end)
 	{
 		usleep(100);
 		current_time = ask_capi_the_time();
+    if (current_time == -1)
+      return (error_inside_routine(philo, ERR_TIME), 1);
 		if (does_sejour_over(philo) == true)
 			break ;
 	}
+  return (0);
 }
 
 int	pick_up_forks(t_philo *philo, pthread_mutex_t *f1, pthread_mutex_t *f2)
 {
 	pthread_mutex_lock(f1);
-	philos_printer(philo, LOG_FORK);
+	if (philos_printer(philo, LOG_FORK) == 2)
+    error_inside_routine(philo, ERR_PRINTF);
 	if (philo->amount_philo == 1)
 	{
 		while (does_sejour_over(philo) != true)
@@ -84,6 +97,7 @@ int	pick_up_forks(t_philo *philo, pthread_mutex_t *f1, pthread_mutex_t *f2)
 		return (1);
     }
     pthread_mutex_lock(f2);
-    philos_printer(philo, LOG_FORK);
+    if (philos_printer(philo, LOG_FORK) == 2)
+      error_inside_routine(philo, ERR_PRINTF);
 	return (0);
 }
