@@ -21,7 +21,7 @@
 
 //Lists of errors
 # define ERR_NUM "Capi wants only numbers as program args. Nothing else."
-# define ERR_MINMAX "Capi wants only numbers between -2147483648 and 2147483647. Last time you do this!!"
+# define ERR_MINMAX "Capi wants only numbers between 0 and 2147483647. Last time you do this!!"
 # define ERR_ARGS \
 	"Capi wants between 4 and 5 args:\n" \
 	"\t1) number_of_philosophers\n" \

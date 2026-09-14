@@ -7,7 +7,7 @@ int	check_all_is_digit(char **argv, int	y)
 	x = 0;
 	while (argv[y][x] != 0)
 	{
-		if (ph_isdigit(argv[y][x] != 1))
+		if (ph_isdigit(argv[y][x]) != 1)
 			return (ph_putendl_fd(ERR_NUM, 2), 1);
 		x++;
 	}
