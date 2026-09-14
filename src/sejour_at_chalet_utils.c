@@ -1,4 +1,6 @@
 #include "../philosophers_general.h"
+#include <bits/pthreadtypes.h>
+#include <pthread.h>
 
 void  philos_printer(t_philo *philo, char *message)
 {
@@ -76,6 +78,12 @@ int	pick_up_forks(t_philo *philo, pthread_mutex_t *f1, pthread_mutex_t *f2)
 {
     pthread_mutex_lock(f1);
     philos_printer(philo, LOG_FORK);
+    if (philo->amount_philo == 1)
+    {
+      while (does_sejour_over(philo) != true)
+        usleep(10);
+      return (1);
+    }
     pthread_mutex_lock(f2);
     philos_printer(philo, LOG_FORK);
 	return (0);

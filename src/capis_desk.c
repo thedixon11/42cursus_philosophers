@@ -3,10 +3,14 @@
 void	capis_printer(t_capi *capi, char *message)
 {
   long  current_time;
+  long  time_of_death;
+  int i;
 
-  pthread_mutex_lock(&capi->mtx_printer);
+  i = capi->whos_dead - 1;
   current_time = ask_capi_the_time();
-  printf("%ld %d %s", current_time, capi->whos_dead, message);
+  time_of_death = current_time - capi->philo[i].start_time;
+  pthread_mutex_lock(&capi->mtx_printer);
+  printf("%ld %d %s", time_of_death, capi->whos_dead, message);
   pthread_mutex_unlock(&capi->mtx_printer);
 }
 
@@ -35,7 +39,7 @@ bool  check_if_everyone_is_full(t_capi *capi)
 bool  check_if_someone_starved(t_capi *capi)
 {
   int i;
-  int current_time;
+  long current_time;
 
   i = 0;
   current_time = 0;
@@ -71,10 +75,9 @@ void	*capi_the_butler(t_capi *capi)
 		if (does_capi_close_chalet(capi) == true)
 		{
 			capi->does_sejour_over = true;
-			usleep(5000);
+			usleep(500);
 			if (capi->does_someone_died == true)
 				capis_printer(capi, LOG_DEAD);
-			dinner_is_over(capi);
 			break ;
 		}
 	}

@@ -32,8 +32,11 @@ int	create_philosophers_squad(t_capi *capi)
 		return (ph_putendl_fd(ERR_MEM, 2), 1);
 	while (i < capi->amount_philo)
 	{
+    capi->philo[i].amount_philo = capi->amount_philo;
 		capi->philo[i].philo_nb = i + 1;
 		capi->philo[i].state = THINK;
+    capi->does_someone_died = false;
+    capi->whos_dead = -1;
 		capi->philo[i].time_to_eat = capi->time_to_eat;
 		capi->philo[i].time_to_sleep = capi->time_to_sleep;
 		capi->philo[i].mtx_printer = &capi->mtx_printer;
