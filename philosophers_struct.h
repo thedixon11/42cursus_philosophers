@@ -35,7 +35,6 @@ typedef struct s_capi
 	long				time_to_eat;
 	long				time_to_sleep;
 	int					meals_to_eat;
-	bool				does_someone_died;
 	int					whos_dead;
 	long				time_of_death;
 	t_philo				*philo;

@@ -59,7 +59,7 @@ void	action_by_usleep(t_philo *philo, long time_of_action)
 	long	current_time;
 	long	end;
 
-	current_time = 0;
+	current_time = ask_capi_the_time();
 	if (does_sejour_over(philo) == true)
 		return ;
 	end = ask_capi_the_time() + time_of_action;
@@ -74,13 +74,14 @@ void	action_by_usleep(t_philo *philo, long time_of_action)
 
 int	pick_up_forks(t_philo *philo, pthread_mutex_t *f1, pthread_mutex_t *f2)
 {
-    pthread_mutex_lock(f1);
-    philos_printer(philo, LOG_FORK);
-    if (philo->amount_philo == 1)
-    {
-      while (does_sejour_over(philo) != true)
-        usleep(10);
-      return (1);
+	pthread_mutex_lock(f1);
+	philos_printer(philo, LOG_FORK);
+	if (philo->amount_philo == 1)
+	{
+		while (does_sejour_over(philo) != true)
+			usleep(10);
+		pthread_mutex_unlock(f1);
+		return (1);
     }
     pthread_mutex_lock(f2);
     philos_printer(philo, LOG_FORK);

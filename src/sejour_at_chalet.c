@@ -2,10 +2,15 @@
 
 void  fondue_time(t_philo *philo)
 {
+	int	error;
+
+	error = 0;
 	if (philo->philo_nb % 2 == 1)
-		pick_up_forks(philo, philo->right_fork, philo->left_fork);
+		error = pick_up_forks(philo, philo->right_fork, philo->left_fork);
 	else
-		pick_up_forks(philo, philo->left_fork, philo->right_fork);
+		error = pick_up_forks(philo, philo->left_fork, philo->right_fork);
+	if (error == 1)
+		return ;
 	philo->state = EAT;
 	philos_printer(philo, LOG_EAT);
 	action_by_usleep(philo, philo->time_to_eat);

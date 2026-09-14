@@ -53,8 +53,8 @@ bool  check_if_someone_starved(t_capi *capi)
 		pthread_mutex_unlock(&capi->philo[i].mtx_last_meal_time);
 		if ((current_time - last_meal_time) > capi->time_to_die)
 		{
-			capi->does_someone_died = true;
 			capi->whos_dead = capi->philo[i].philo_nb;
+			capis_printer(capi, LOG_DEAD);
 			return (true);
 		}
 		i++;
@@ -80,9 +80,7 @@ void	*capi_the_butler(t_capi *capi)
 			pthread_mutex_lock(&capi->mtx_does_sejour_over);
 			capi->does_sejour_over = true;
 			pthread_mutex_unlock(&capi->mtx_does_sejour_over);
-			usleep(500);
-			if (capi->does_someone_died == true)
-				capis_printer(capi, LOG_DEAD);
+			usleep(5000);
 			break ;
 		}
 	}
