@@ -33,7 +33,7 @@
 // Lists of errors
 # define ERR_NUM "Capi wants only numbers as program args. Nothing else.\n"
 # define ERR_MINMAX "Capi wants only numbers between 0 and 2147483647.\n"
-# define ERR_ARGS "Capi wants between 4 and 5 args:\n"
+# define ERR_ARGS "Capi wants between 4 and 5 args\n"
 # define ERR_MEM "Capi failed to allocate memory."
 # define ERR_NBPHILO "Capi wants to invite at least one person to dinner.\n"
 # define ERR_TIME "Capi had an issue with gettimeofday"
