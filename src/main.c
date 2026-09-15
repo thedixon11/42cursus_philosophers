@@ -49,6 +49,7 @@ int	create_threads(t_capi *capi)
 			capi->created_threads = i;
 			return (1);
 		}
+		capi->created_threads = i + 1;
 		i++;
 	}
 	return (0);
