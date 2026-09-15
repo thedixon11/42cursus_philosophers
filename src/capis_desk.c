@@ -6,31 +6,11 @@
 /*   By: jvasconc <jvasconc@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/15 09:58:32 by jvasconc          #+#    #+#             */
-/*   Updated: 2026/09/15 10:15:35 by jvasconc         ###   ########.fr       */
+/*   Updated: 2026/09/15 10:33:58 by jvasconc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philosophers_general.h"
-
-void	capis_printer(t_capi *capi, char *message)
-{
-	long	current_time;
-	long	time_of_death;
-	int		i;
-
-	i = capi->whos_dead - 1;
-	current_time = ask_capi_the_time();
-	if (current_time == -1)
-	{
-		error_inside_routine_capi(capi, ERR_TIME);
-		return ;
-	}
-	time_of_death = current_time - capi->philo[i].start_time;
-	pthread_mutex_lock(&capi->mtx_printer);
-	if (printf("%ld %d %s", time_of_death, capi->whos_dead, message) < 0)
-		error_inside_routine_capi(capi, ERR_PRINTF);
-	pthread_mutex_unlock(&capi->mtx_printer);
-}
 
 bool	check_if_everyone_is_full(t_capi *capi)
 {
@@ -94,16 +74,10 @@ bool	does_capi_close_chalet(t_capi *capi)
 void	*capi_the_butler(t_capi *capi)
 {
 	bool	does_sejour_over;
-	long	current_time;
 
 	does_sejour_over = false;
-	current_time = 0;
-	while (current_time < capi->start_time)
-	{
-		current_time = ask_capi_the_time();
-		if (current_time == -1)
-			return (error_inside_routine_capi(capi, ERR_TIME), NULL);
-	}
+	if (capis_starter(capi) == 1)
+		return (NULL);
 	while (1)
 	{
 		if (does_capi_close_chalet(capi) == true || does_sejour_over == true)

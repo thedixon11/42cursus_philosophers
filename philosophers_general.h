@@ -6,7 +6,7 @@
 /*   By: jvasconc <jvasconc@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/15 09:59:10 by jvasconc          #+#    #+#             */
-/*   Updated: 2026/09/15 09:59:11 by jvasconc         ###   ########.fr       */
+/*   Updated: 2026/09/15 10:33:05 by jvasconc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,10 @@ void	*capi_the_butler(t_capi *capi);
 bool	does_capi_close_chalet(t_capi *capi);
 bool	check_if_someone_starved(t_capi *capi);
 bool	check_if_everyone_is_full(t_capi *capi);
+
+// capis_desk_utils.c
 void	capis_printer(t_capi *capi, char *message);
+int		capis_starter(t_capi *capi);
 
 // dinner_is_over.c
 void	dinner_is_over(t_capi *capi);
