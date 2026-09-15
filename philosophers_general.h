@@ -1,7 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philosophers_general.h                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jvasconc <jvasconc@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/09/15 09:59:10 by jvasconc          #+#    #+#             */
+/*   Updated: 2026/09/15 09:59:11 by jvasconc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILOSOPHERS_GENERAL_H
 # define PHILOSOPHERS_GENERAL_H
-# include "./philosophers_struct.h"
-# include "./src/utils/philosophers_utils.h"
 # include <limits.h>
 # include <pthread.h>
 # include <stdbool.h>
@@ -10,6 +20,8 @@
 # include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
+# include "./philosophers_struct.h"
+# include "./src/utils/philosophers_utils.h"
 
 // Lists of log messages
 # define LOG_FORK "has taken a fork\n"

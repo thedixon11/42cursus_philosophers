@@ -1,5 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_values_are_right.c                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jvasconc <jvasconc@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/09/15 09:58:40 by jvasconc          #+#    #+#             */
+/*   Updated: 2026/09/15 09:58:42 by jvasconc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../philosophers_general.h"
-#include "utils/philosophers_utils.h"
 
 int	check_all_is_digit(char **argv, int y)
 {

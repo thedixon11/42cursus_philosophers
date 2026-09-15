@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jvasconc <jvasconc@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/09/15 09:58:18 by jvasconc          #+#    #+#             */
+/*   Updated: 2026/09/15 09:58:25 by jvasconc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../philosophers_general.h"
 
 void	set_lr_forks(t_capi *capi)
@@ -18,12 +30,17 @@ void	set_lr_forks(t_capi *capi)
 
 int	create_threads(t_capi *capi)
 {
-	int	i;
+	int		i;
+	long	start_time;
 
 	i = 0;
+	start_time = ask_capi_the_time();
+	if (start_time == -1)
+		return (ph_putendl_fd(ERR_TIME, 2), 1);
+	start_time += 1000;
 	while (i < capi->amount_philo)
 	{
-		capi->philo[i].start_time = ask_capi_the_time();
+		capi->philo[i].start_time = start_time;
 		capi->philo[i].last_meal_time = capi->philo[i].start_time;
 		if (pthread_create(&capi->philo[i].id, NULL, &sejour_at_chalet,
 				&capi->philo[i]) != 0)
