@@ -6,7 +6,7 @@
 /*   By: jvasconc <jvasconc@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/15 09:59:14 by jvasconc          #+#    #+#             */
-/*   Updated: 2026/09/15 09:59:16 by jvasconc         ###   ########.fr       */
+/*   Updated: 2026/09/15 10:12:49 by jvasconc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_capi
 	long			time_to_eat;
 	long			time_to_sleep;
 	int				meals_to_eat;
+	long			start_time;
 	int				whos_dead;
 	long			time_of_death;
 	t_philo			*philo;

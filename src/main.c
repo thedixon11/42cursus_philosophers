@@ -6,7 +6,7 @@
 /*   By: jvasconc <jvasconc@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/15 09:58:18 by jvasconc          #+#    #+#             */
-/*   Updated: 2026/09/15 09:58:25 by jvasconc         ###   ########.fr       */
+/*   Updated: 2026/09/15 10:13:07 by jvasconc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	create_threads(t_capi *capi)
 	if (start_time == -1)
 		return (ph_putendl_fd(ERR_TIME, 2), 1);
 	start_time += 1000;
+	capi->start_time = start_time;
 	while (i < capi->amount_philo)
 	{
 		capi->philo[i].start_time = start_time;

@@ -6,7 +6,7 @@
 /*   By: jvasconc <jvasconc@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/15 09:58:32 by jvasconc          #+#    #+#             */
-/*   Updated: 2026/09/15 09:58:34 by jvasconc         ###   ########.fr       */
+/*   Updated: 2026/09/15 10:15:35 by jvasconc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,16 @@ bool	does_capi_close_chalet(t_capi *capi)
 void	*capi_the_butler(t_capi *capi)
 {
 	bool	does_sejour_over;
+	long	current_time;
 
 	does_sejour_over = false;
+	current_time = 0;
+	while (current_time < capi->start_time)
+	{
+		current_time = ask_capi_the_time();
+		if (current_time == -1)
+			return (error_inside_routine_capi(capi, ERR_TIME), NULL);
+	}
 	while (1)
 	{
 		if (does_capi_close_chalet(capi) == true || does_sejour_over == true)

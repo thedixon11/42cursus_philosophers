@@ -6,7 +6,7 @@
 /*   By: jvasconc <jvasconc@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/15 09:58:28 by jvasconc          #+#    #+#             */
-/*   Updated: 2026/09/15 09:58:29 by jvasconc         ###   ########.fr       */
+/*   Updated: 2026/09/15 10:07:20 by jvasconc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,16 @@ void	snoring_time(t_philo *philo)
 void	*sejour_at_chalet(void *item)
 {
 	t_philo	*philo;
+	long	current_time;
 
 	philo = (t_philo *)item;
+	current_time = 0;
+	while (current_time < philo->start_time)
+	{
+		current_time = ask_capi_the_time();
+		if (current_time == -1)
+			return (error_inside_routine(philo, ERR_TIME), NULL);
+	}
 	while (does_sejour_over(philo) == false)
 	{
 		if (does_sejour_over(philo) == false)
