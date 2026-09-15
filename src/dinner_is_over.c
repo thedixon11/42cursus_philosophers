@@ -12,7 +12,7 @@ void	free_memory(t_capi *capi)
 
 void	destroy_all_mutexes(t_capi *capi)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < capi->amount_philo)

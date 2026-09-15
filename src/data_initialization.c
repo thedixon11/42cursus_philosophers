@@ -1,6 +1,6 @@
 #include "../philosophers_general.h"
 
-void create_capi_mutexes(t_capi *capi)
+void	create_capi_mutexes(t_capi *capi)
 {
 	pthread_mutex_init(&capi->mtx_printer, NULL);
 	pthread_mutex_init(&capi->mtx_does_sejour_over, NULL);
@@ -32,10 +32,10 @@ int	create_philosophers_squad(t_capi *capi)
 		return (ph_putendl_fd(ERR_MEM, 2), 1);
 	while (i < capi->amount_philo)
 	{
-    capi->philo[i].amount_philo = capi->amount_philo;
+		capi->philo[i].amount_philo = capi->amount_philo;
 		capi->philo[i].philo_nb = i + 1;
 		capi->philo[i].state = THINK;
-    capi->whos_dead = -1;
+		capi->whos_dead = -1;
 		capi->philo[i].time_to_eat = capi->time_to_eat;
 		capi->philo[i].time_to_sleep = capi->time_to_sleep;
 		capi->philo[i].mtx_printer = &capi->mtx_printer;
@@ -63,7 +63,7 @@ t_capi	*init_capi_forks_philos(int argc, char **argv)
 		capi->meals_to_eat = ph_atol(argv[5]);
 	else
 		capi->meals_to_eat = -1;
-	capi->does_sejour_over = false;	
+	capi->does_sejour_over = false;
 	create_capi_mutexes(capi);
 	if (create_philosophers_squad(capi) == 1)
 		return (free_memory(capi), NULL);

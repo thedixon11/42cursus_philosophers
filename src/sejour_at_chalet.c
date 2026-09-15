@@ -1,6 +1,6 @@
 #include "../philosophers_general.h"
 
-void  fondue_time(t_philo *philo)
+void	fondue_time(t_philo *philo)
 {
 	int	error;
 
@@ -13,27 +13,27 @@ void  fondue_time(t_philo *philo)
 		return ;
 	philo->state = EAT;
 	if (philos_printer(philo, LOG_EAT) == 2)
-    error_inside_routine(philo, ERR_PRINTF);
+		error_inside_routine(philo, ERR_PRINTF);
 	action_by_usleep(philo, philo->time_to_eat);
 	pthread_mutex_unlock(philo->right_fork);
 	pthread_mutex_unlock(philo->left_fork);
 }
 
-void  snoring_time(t_philo *philo)
+void	snoring_time(t_philo *philo)
 {
 	philo->state = SLEEP;
 	if (philos_printer(philo, LOG_SLEEP) == 2)
-    error_inside_routine(philo, ERR_PRINTF);
+		error_inside_routine(philo, ERR_PRINTF);
 	action_by_usleep(philo, philo->time_to_sleep);
 	philo->state = THINK;
 	if (philos_printer(philo, LOG_THINK) == 2)
-    error_inside_routine(philo, ERR_PRINTF);
+		error_inside_routine(philo, ERR_PRINTF);
 }
 
 void	*sejour_at_chalet(void *item)
 {
 	t_philo	*philo;
-	
+
 	philo = (t_philo *)item;
 	while (does_sejour_over(philo) == false)
 	{

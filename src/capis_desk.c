@@ -2,25 +2,25 @@
 
 void	capis_printer(t_capi *capi, char *message)
 {
-  long  current_time;
-  long  time_of_death;
-  int i;
+	long	current_time;
+	long	time_of_death;
+	int		i;
 
-  i = capi->whos_dead - 1;
-  current_time = ask_capi_the_time();
-  if (current_time == -1)
-  {
-    error_inside_routine_capi(capi, ERR_TIME);
-    return ;
-  }
-  time_of_death = current_time - capi->philo[i].start_time;
-  pthread_mutex_lock(&capi->mtx_printer);
-  if (printf("%ld %d %s", time_of_death, capi->whos_dead, message) < 0)
-    error_inside_routine_capi(capi, ERR_PRINTF);
-  pthread_mutex_unlock(&capi->mtx_printer);
+	i = capi->whos_dead - 1;
+	current_time = ask_capi_the_time();
+	if (current_time == -1)
+	{
+		error_inside_routine_capi(capi, ERR_TIME);
+		return ;
+	}
+	time_of_death = current_time - capi->philo[i].start_time;
+	pthread_mutex_lock(&capi->mtx_printer);
+	if (printf("%ld %d %s", time_of_death, capi->whos_dead, message) < 0)
+		error_inside_routine_capi(capi, ERR_PRINTF);
+	pthread_mutex_unlock(&capi->mtx_printer);
 }
 
-bool  check_if_everyone_is_full(t_capi *capi)
+bool	check_if_everyone_is_full(t_capi *capi)
 {
 	int		i;
 	bool	answer;
@@ -42,7 +42,7 @@ bool  check_if_everyone_is_full(t_capi *capi)
 	return (answer);
 }
 
-bool  check_if_someone_starved(t_capi *capi)
+bool	check_if_someone_starved(t_capi *capi)
 {
 	int		i;
 	long	current_time;
@@ -54,8 +54,8 @@ bool  check_if_someone_starved(t_capi *capi)
 	while (i < capi->amount_philo)
 	{
 		current_time = ask_capi_the_time();
-    if (current_time == -1)
-      return (error_inside_routine_capi(capi, ERR_TIME), true);
+		if (current_time == -1)
+			return (error_inside_routine_capi(capi, ERR_TIME), true);
 		pthread_mutex_lock(&capi->philo[i].mtx_last_meal_time);
 		last_meal_time = capi->philo[i].last_meal_time;
 		pthread_mutex_unlock(&capi->philo[i].mtx_last_meal_time);
@@ -70,7 +70,7 @@ bool  check_if_someone_starved(t_capi *capi)
 	return (false);
 }
 
-bool  does_capi_close_chalet(t_capi *capi)
+bool	does_capi_close_chalet(t_capi *capi)
 {
 	if (check_if_someone_starved(capi) == true)
 		return (true);
@@ -81,9 +81,9 @@ bool  does_capi_close_chalet(t_capi *capi)
 
 void	*capi_the_butler(t_capi *capi)
 {
-  bool  does_sejour_over;
+	bool	does_sejour_over;
 
-  does_sejour_over = false;
+	does_sejour_over = false;
 	while (1)
 	{
 		if (does_capi_close_chalet(capi) == true || does_sejour_over == true)
@@ -95,7 +95,7 @@ void	*capi_the_butler(t_capi *capi)
 			break ;
 		}
 		pthread_mutex_lock(&capi->mtx_does_sejour_over);
-    does_sejour_over = capi->does_sejour_over;
+		does_sejour_over = capi->does_sejour_over;
 		pthread_mutex_unlock(&capi->mtx_does_sejour_over);
 	}
 	return (NULL);
