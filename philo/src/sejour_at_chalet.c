@@ -1,0 +1,66 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sejour_at_chalet.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jvasconc <jvasconc@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/09/15 09:58:28 by jvasconc          #+#    #+#             */
+/*   Updated: 2026/09/15 10:07:20 by jvasconc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../philosophers_general.h"
+
+void	fondue_time(t_philo *philo)
+{
+	int	error;
+
+	error = 0;
+	if (philo->philo_nb % 2 == 1)
+		error = pick_up_forks(philo, philo->right_fork, philo->left_fork);
+	else
+		error = pick_up_forks(philo, philo->left_fork, philo->right_fork);
+	if (error == 1)
+		return ;
+	philo->state = EAT;
+	if (philos_printer(philo, LOG_EAT) == 2)
+		error_inside_routine(philo, ERR_PRINTF);
+	action_by_usleep(philo, philo->time_to_eat);
+	pthread_mutex_unlock(philo->right_fork);
+	pthread_mutex_unlock(philo->left_fork);
+}
+
+void	snoring_time(t_philo *philo)
+{
+	philo->state = SLEEP;
+	if (philos_printer(philo, LOG_SLEEP) == 2)
+		error_inside_routine(philo, ERR_PRINTF);
+	action_by_usleep(philo, philo->time_to_sleep);
+	philo->state = THINK;
+	if (philos_printer(philo, LOG_THINK) == 2)
+		error_inside_routine(philo, ERR_PRINTF);
+}
+
+void	*sejour_at_chalet(void *item)
+{
+	t_philo	*philo;
+	long	current_time;
+
+	philo = (t_philo *)item;
+	current_time = 0;
+	while (current_time < philo->start_time)
+	{
+		current_time = ask_capi_the_time();
+		if (current_time == -1)
+			return (error_inside_routine(philo, ERR_TIME), NULL);
+	}
+	while (does_sejour_over(philo) == false)
+	{
+		if (does_sejour_over(philo) == false)
+			fondue_time(philo);
+		if (does_sejour_over(philo) == false)
+			snoring_time(philo);
+	}
+	return (NULL);
+}
